@@ -8,6 +8,8 @@
     "dev": "wxt",
     "dev:site": "vite --config vite.site.config.ts",
     "prepare": "wxt prepare",
+    "setup:browser": "node scripts/install-playwright-browser.mjs",
+    "setup:browser:ci": "node scripts/install-playwright-browser.mjs --with-deps",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "build:extension": "wxt build",
@@ -16,6 +18,10 @@
     "build": "npm run build:site",
     "test:pwa-update": "vitest run tests/service-worker-update.test.ts",
     "verify:extension": "node scripts/verify-extension.mjs",
+    "verify:zip": "unzip -t dist/site/downloads/caption-cues-chrome.zip",
+    "verify:release": "npm run check && npm run verify:extension && npm run test:pwa-update && npm run verify:zip",
+    "check:clean-browser": "node scripts/check-clean-playwright-cache.mjs",
+    "check:clean-browser:ci": "node scripts/check-clean-playwright-cache.mjs --with-deps",
     "check": "npm run typecheck && npm test && npm run build"
   },
   "devDependencies": {

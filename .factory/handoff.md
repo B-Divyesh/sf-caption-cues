@@ -1,24 +1,69 @@
-# Caption Cues verification handoff
+# Caption Cues repair handoff
 
-## Status: FAIL
+## Status: PASS — clean-checkout QA gate repaired
 
-Independent QA of candidate `8e64e86e53de951c68db68376abb360adb68f704` against <https://caption-cues.sociobot.in/> completed on 2026-08-27 UTC. The live JS, service worker, and downloadable ZIP match the freshly built candidate byte-for-byte; product behavior, accessibility, privacy, security headers, mobile layout, and PWA offline/update paths passed the exercised checks.
+This repair resolves verifier-2's P1 release blocker for candidate
+`8e64e86e53de951c68db68376abb360adb68f704`: Playwright Chromium was a
+required but undocumented external dependency, so `npm ci && npm run check`
+could not run the browser-backed PWA test on a clean machine.
 
-The candidate is **not releasable** because its required test gate does not run from the documented clean setup. `npm ci && npm run check` fails with Playwright's missing Chromium/headless-shell executable. Installing it manually with `npx playwright install chromium` makes all 13 tests, type checking, production build, extension smoke, PWA-update test, and ZIP validation pass, but that setup step is absent from the package workflow and README.
+## What changed
 
-## Required fix
+- Added `npm run setup:browser`, a project script that invokes the
+  lockfile-pinned local Playwright CLI to install Chromium. It never falls back
+  to a global `npx` version.
+- Added `npm run setup:browser:ci`, which uses Playwright's supported
+  `install --with-deps chromium` for Ubuntu CI workers that also need browser
+  runtime libraries.
+- Added `npm run check:clean-browser` and its CI variant. Each creates an
+  empty, isolated `PLAYWRIGHT_BROWSERS_PATH`, explicitly provisions Chromium,
+  runs the full release verification, and deletes the temporary cache. A
+  missing download or runtime dependency therefore fails visibly rather than
+  being masked by an existing host browser cache.
+- Added `.github/workflows/quality.yml` to run the isolated-cache CI gate on
+  pull requests and pushes to `main`.
+- Added release verification commands: `verify:zip` and `verify:release`.
+- Documented the exact clean setup and CI setup in `README.md`.
 
-P1 release blocker: make the browser-test dependency reproducible from a clean checkout (script/CI provisioning and README instructions), then rerun `npm ci && npm run check` with an empty Playwright browser cache. No product-code defect was found in the tested job-to-be-done.
+## Clean setup and verification
 
-## How to verify after the fix
+Requires Node.js 20+.
 
 ```sh
 npm ci
-npx playwright install chromium
+npm run setup:browser
 npm run check
-npm run verify:extension
-npm run test:pwa-update
-unzip -t dist/site/downloads/caption-cues-chrome.zip
 ```
 
-See `.factory/verification-2.md` for full exact evidence, artifact hashes, live headers/caching, test matrix, performance results, and accepted product boundaries.
+For a complete proof from an empty browser cache:
+
+```sh
+npm ci
+npm run check:clean-browser
+```
+
+Ubuntu CI uses `npm run check:clean-browser:ci`, which includes Playwright's
+supported Linux dependency installation.
+
+Verified locally on 2026-08-27 UTC with `npm run check:clean-browser`:
+
+- fresh isolated browser cache: Chromium, FFmpeg, and Chromium headless shell
+  downloaded from the locked Playwright `1.62.1` dependency;
+- `npm run typecheck`: pass;
+- `npm test`: 4 files / 13 tests pass, including the service-worker browser
+  update test;
+- `npm run build`: pass; builds MV3 extension, Chrome ZIP, deployable static
+  site, and versioned service worker;
+- `npm run verify:extension`: pass;
+- `npm run test:pwa-update`: pass;
+- `npm run verify:zip`: pass; all 11 MV3 archive entries validate.
+
+The isolated cache was deleted after the successful run. No product behavior,
+privacy, accessibility, or static-host policy changes were needed; verifier-2
+found those areas passing.
+
+## Known gaps / next steps
+
+- No known product or release-gate gaps remain from verifier-2.
+- The factory deployment step must publish `dist/site` as the Standard static
+  artifact after this commit; deployment result is recorded with the release.

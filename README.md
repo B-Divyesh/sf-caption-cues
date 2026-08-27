@@ -16,15 +16,35 @@ It works only with caption text a page already exposes through standard `TextTra
 
 ## Develop
 
-Requires Node.js 20 or newer.
+Requires Node.js 20 or newer. The service-worker update and extension smoke
+tests launch the lockfile-pinned Playwright Chromium, so provision it explicitly
+after every fresh `npm ci` (or whenever the Playwright cache is removed).
 
 ```sh
 npm ci
+npm run setup:browser
+npm run check        # typecheck, all tests (including the browser test), and build
 npm run dev          # WXT extension development
 npm run dev:site     # landing site development
-npm run typecheck
-npm test
 ```
+
+`setup:browser` uses this repository's installed Playwright CLI, rather than a
+global `npx` version, and installs Chromium into Playwright's standard cache.
+On an Ubuntu CI worker that also needs OS browser libraries, use
+`npm run setup:browser:ci`; it runs Playwright's supported
+`install --with-deps chromium` command. The included GitHub Actions job proves
+the full release gate with a newly-created, isolated browser cache:
+
+```sh
+npm ci
+npm run check:clean-browser       # fresh cache, provision Chromium, then full release verification
+# Ubuntu CI only (also provisions Linux browser libraries):
+npm run check:clean-browser:ci
+```
+
+The clean-cache command deliberately does not reuse the normal Playwright
+cache. If Chromium or its runtime dependencies cannot be installed, it fails
+before tests run rather than falling back to a host browser.
 
 ## Build
 
@@ -38,7 +58,7 @@ The finalized site build also generates `dist/site/service-worker.js` from a has
 
 To test the extension locally, open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select `dist/extension`. Open a page with browser-exposed captions, turn captions on, and open Caption Cues from the toolbar.
 
-After building, `npm run verify:extension` loads that exact unpacked output in Chromium and checks DOM-caption emphasis plus `Alt+R` replay. `npm run test:pwa-update` proves a controlled client updates from generated build A to build B and can load build B offline.
+After building, `npm run verify:extension` loads that exact unpacked output in Chromium and checks DOM-caption emphasis plus `Alt+R` replay. `npm run test:pwa-update` proves a controlled client updates from generated build A to build B and can load build B offline. `npm run verify:zip` checks the packaged Chrome ZIP; `npm run verify:release` runs the complete type, test, build, extension, PWA, and ZIP suite.
 
 ## Privacy and permissions
 

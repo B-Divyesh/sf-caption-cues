@@ -1,0 +1,25 @@
+name: Quality gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Clean Playwright cache release verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # This starts with an isolated empty browser cache, installs Chromium and
+      # Linux runtime libraries, then runs tests, build, extension, PWA and ZIP checks.
+      - run: npm run check:clean-browser:ci
