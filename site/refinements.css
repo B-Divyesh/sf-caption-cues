@@ -1,0 +1,23 @@
+:root {
+  --signal: #ad320f;
+}
+
+.restore .copy-license {
+  margin-top: 12px;
+  background: var(--clean);
+  color: var(--ink);
+}
+
+.copy-license[hidden] {
+  display: none;
+}
+
+footer > * {
+  min-width: 0;
+}
+
+@media (max-width: 760px) {
+  footer > * {
+    grid-column: 1 !important;
+  }
+}

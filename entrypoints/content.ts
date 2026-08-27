@@ -134,7 +134,10 @@ export default defineContentScript({
 
     function scanDom(root: ParentNode = document) {
       if (!settings.enabled) return;
-      for (const node of root.querySelectorAll<HTMLElement>(DOM_SELECTOR)) {
+      const nodes: HTMLElement[] = [];
+      if (root instanceof HTMLElement && root.matches(DOM_SELECTOR)) nodes.push(root);
+      nodes.push(...root.querySelectorAll<HTMLElement>(DOM_SELECTOR));
+      for (const node of nodes) {
         if (!isLikelyCaption(node)) continue;
         const text = node.textContent?.replace(/\s+/g, ' ').trim() ?? '';
         if (node.dataset.captionCuesSource === text) continue;

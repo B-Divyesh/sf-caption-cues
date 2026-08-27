@@ -8,7 +8,7 @@ interface Range {
 }
 
 const COMMON_CAPITALIZED = new Set([
-  'A', 'An', 'And', 'Are', 'As', 'At', 'But', 'Can', 'Did', 'Do', 'For', 'From',
+  'A', 'An', 'And', 'Are', 'As', 'Ask', 'At', 'But', 'Can', 'Did', 'Do', 'For', 'From',
   'He', 'Her', 'Here', 'His', 'How', 'I', 'If', 'In', 'Is', 'It', 'Its', 'Let',
   'My', 'No', 'Not', 'Now', 'Of', 'Oh', 'On', 'Or', 'Our', 'She', 'So', 'That',
   'Tell', 'The', 'Their', 'Then', 'There', 'They', 'This', 'To', 'We', 'Well', 'What',

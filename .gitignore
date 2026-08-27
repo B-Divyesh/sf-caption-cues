@@ -2,6 +2,7 @@ node_modules/
 dist/
 .output/
 .wxt/
+.factory/evidence/
 site/public/downloads/
 .env
 *.log

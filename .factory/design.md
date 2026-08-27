@@ -16,7 +16,7 @@ The single light treatment is intentional. A consistent opaque caption plate giv
 | Muted ink | `--ink-muted` | `#5A554A` | Secondary text; 6.5:1 on paper |
 | Cobalt | `--cobalt` | `#1546C7` | Links, focus, name/manual emphasis |
 | Cobalt dark | `--cobalt-dark` | `#0C2C81` | Hover and text contrast |
-| Signal | `--signal` | `#C43B12` | Sound cue label and warning mark |
+| Signal | `--signal` | `#AD320F` | Sound cue label and warning mark |
 | Leaf | `--leaf` | `#2E6A43` | Success states |
 | Rule | `--rule` | `#B8AD96` | Dividers and inactive borders |
 

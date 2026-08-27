@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://caption-cues.sociobot.in/sitemap.xml
