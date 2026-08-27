@@ -35,9 +35,16 @@ The deployable directory is `dist/site`; it includes `staticwebapp.config.json` 
 /opt/fleet/lib/deploy-static.sh caption-cues dist/site
 ```
 
-## Remaining release verification
+## Live Standard-static verification
 
-After deploy, run the factory URL verifier and inspect the live response headers for `/assets/<hashed-js>`, `/service-worker.js`, and `/downloads/caption-cues-chrome.zip`. Confirm CSP and Permissions-Policy are present, immutable asset caching is applied, and the worker response is `no-cache`. Then run Axe and Lighthouse against the live HTTPS URL. This handoff will be updated with live evidence once deployment completes.
+Deployed to <https://caption-cues.sociobot.in/> through the factory Standard Static Web Apps path on 2026-08-27.
+
+- Factory `verify-url.sh`: pass — HTTP 200, 1,753 ms network-idle navigation, title/lang/one `<h1>`/`<main>` present, every image has alt text, no unnamed buttons, and no console/page errors.
+- Live headers: `/assets/home-BMy72pU6.js` returns `public, max-age=31536000, immutable`; `/service-worker.js` returns `no-cache`; the extension download returns `public, max-age=3600`; CSP and Permissions-Policy are present on all checked responses.
+- Live artifact identity: local and deployed JS SHA-256 `511136c12c3233b6ad5a548c9b977f6f0d5199e3f2c6608aefd3f446ec81c96d`, ZIP SHA-256 `859c81e52a556fd60a44769521e3173f273e262e212b873875eb195ebb190ae4`, and worker SHA-256 `5ef1e33357074d38e82be8a119c0c8e3217a0bbd8f8940ee4981b76fa51512a2` match exactly.
+- Playwright Axe WCAG 2 A/AA at 390 × 844: 0 violations. (Axe CLI’s Selenium Chrome driver could not start in this root container; Playwright Axe, already in this repository, was used instead.)
+- Lighthouse mobile: Performance 100, Accessibility 100, Best Practices 100, SEO 100; FCP 0.8 s, LCP 1.2 s, TBT 0 ms, CLS 0.
+- Live PWA smoke: the production worker controlled the page; a forced offline reload retained the title and `<h1>` with zero console/page errors.
 
 ## Known product boundaries
 
