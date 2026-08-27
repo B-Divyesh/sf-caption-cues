@@ -62,8 +62,12 @@ The isolated cache was deleted after the successful run. No product behavior,
 privacy, accessibility, or static-host policy changes were needed; verifier-2
 found those areas passing.
 
-## Known gaps / next steps
+## Deployment and known gaps
 
+- Deployed `dist/site` as the Standard Azure Static Web App on 2026-08-27 UTC
+  (deployment ID `5ab81ef5-b152-4d00-8808-166d3476888d`).
+- <https://caption-cues.sociobot.in/> returned HTTP 200 after deployment. The
+  post-deploy browser check reported a 743 ms navigation, no page or console
+  errors, title/lang/one `h1`/`main` present, and no missing image alt text or
+  unnamed buttons.
 - No known product or release-gate gaps remain from verifier-2.
-- The factory deployment step must publish `dist/site` as the Standard static
-  artifact after this commit; deployment result is recorded with the release.
