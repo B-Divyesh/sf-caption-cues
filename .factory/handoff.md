@@ -1,5 +1,21 @@
 # Caption Cues v1 handoff
 
+## Independent verification 1 — **FAIL**
+
+Verified 2026-08-27 UTC against candidate `9de3bc208937c80ad34b901e8d29307497450a6b` and <https://caption-cues.sociobot.in/>.
+
+The built extension and live site are functionally sound: clean install, type-check, 11/11 tests, exact production build, loaded-extension DOM and WebVTT caption flows, replay, invalid-license recovery, axe, keyboard, mobile, privacy/network, and offline reload checks passed. The live HTML, JS, CSS, and extension ZIP exactly match the newly built candidate by SHA-256.
+
+**Do not release this candidate as PASS yet.** Independent QA found:
+
+1. **Medium:** the live host ignores `dist/site/_headers`; every checked response has `Cache-Control: public, must-revalidate, max-age=30` rather than immutable hashed assets, a `no-cache` service worker, and the committed download/image policies.
+2. **Medium:** `service-worker.js` hard-codes cache `caption-cues-v1` and cache-first serves `/`. A controlled update test with this exact worker logic kept serving release 1 after the server changed to release 2 when worker source was unchanged. Cache versioning/revalidation must be automated per deployment.
+3. **Low:** live responses omit CSP and Permissions-Policy (HSTS, nosniff, and strict referrer policy are present).
+
+See `.factory/verification-1.md` for commands, fresh browser evidence, byte-identical deployment checks, severity rationale, and remediation. After deployment configuration and service-worker update behaviour are corrected, rerun the live header and PWA-update portions of that report.
+
+---
+
 ## Shipped
 
 - WXT + TypeScript Manifest V3 Chrome extension with a 38 KB unpacked production bundle.
