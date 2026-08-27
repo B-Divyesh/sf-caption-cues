@@ -1,5 +1,8 @@
 node_modules/
 dist/
+.output/
+.wxt/
+site/public/downloads/
 .env
 *.log
 graphify-out/

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Caption Cues">
+  <rect width="128" height="128" rx="18" fill="#f4ebd8"/>
+  <circle cx="64" cy="64" r="47" fill="#1546c7"/>
+  <circle cx="64" cy="64" r="53" fill="none" stroke="#171612" stroke-width="4" stroke-dasharray="5 6"/>
+  <text x="64" y="76" text-anchor="middle" font-family="Georgia,serif" font-size="42" font-weight="700" fill="#fff9ed">CC</text>
+  <circle cx="103" cy="101" r="11" fill="#c43b12" stroke="#171612" stroke-width="3"/>
+</svg>

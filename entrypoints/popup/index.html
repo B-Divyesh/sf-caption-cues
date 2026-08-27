@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4ebd8" />
+    <title>Caption Cues settings</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <header class="masthead">
+        <span class="mark" aria-hidden="true">CC</span>
+        <div><p class="kicker">Live proof sheet</p><h1>Caption Cues</h1></div>
+        <label class="master"><span class="sr-only">Enable Caption Cues</span><input id="enabled" type="checkbox" /><span aria-hidden="true"></span></label>
+      </header>
+
+      <div id="status" class="status" role="status" aria-live="polite">Checking this page…</div>
+
+      <section aria-labelledby="rules-title">
+        <h2 id="rules-title">What should stand out?</h2>
+        <label class="rule"><input id="names" type="checkbox" /><span><b>Names</b><small>Capitalized names such as Mina or Calder</small></span></label>
+        <label class="rule"><input id="speakers" type="checkbox" /><span><b>Speaker changes</b><small>Labels before a colon</small></span></label>
+        <label class="rule"><input id="sounds" type="checkbox" /><span><b>Sound cues</b><small>Bracketed cues like [doorbell]</small></span></label>
+        <label class="rule"><input id="manual" type="checkbox" /><span><b>My saved words</b><small>Your own easy-to-miss words</small></span></label>
+      </section>
+
+      <section aria-labelledby="words-title">
+        <h2 id="words-title">Saved words</h2>
+        <form id="word-form"><label for="word">Add a word or short phrase</label><div class="field-row"><input id="word" maxlength="40" autocomplete="off" /><button type="submit">Add</button></div></form>
+        <ul id="words" class="words" aria-label="Saved words"></ul>
+        <p id="words-empty" class="empty">None yet. Try a character name or a place.</p>
+      </section>
+
+      <section class="settings" aria-labelledby="display-title">
+        <h2 id="display-title">Caption plate</h2>
+        <label for="size">Text size</label>
+        <select id="size"><option value="22">Comfortable</option><option value="26">Large</option><option value="30">Extra large</option></select>
+        <label for="theme">Print theme</label>
+        <select id="theme"><option value="paper">Paper</option><option value="ink">Night ink</option><option value="cobalt">Cobalt — Supporter</option></select>
+        <p id="theme-note" class="help" hidden>Cobalt is a cosmetic Supporter theme. All caption tools stay free.</p>
+      </section>
+
+      <button id="replay" class="primary" type="button">Replay last caption <kbd>Alt R</kbd></button>
+
+      <details>
+        <summary>Supporter edition</summary>
+        <p>Unlock the cosmetic Cobalt caption plate for a one-time $9 and support ongoing maintenance. Every comprehension feature stays free.</p>
+        <a class="buy" href="https://api.sociobot.in/api/v1/products/caption-cues/checkout" target="_blank">Buy from Sociobot</a>
+        <form id="license-form"><label for="license">Have a license? Paste it</label><div class="field-row"><input id="license" type="password" autocomplete="off" /><button type="submit">Verify</button></div></form>
+        <p id="license-status" class="help" role="status" aria-live="polite"></p>
+      </details>
+      <p class="footnote">Runs locally. It reads only captions already exposed by this page. <a href="https://caption-cues.sociobot.in/privacy/" target="_blank">Privacy</a> · <a href="https://caption-cues.sociobot.in/terms/" target="_blank">Terms</a></p>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

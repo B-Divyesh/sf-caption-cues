@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4ebd8" />
+    <meta name="description" content="Caption Cues is a local-first browser extension that emphasizes names, speakers, sounds, and words you choose in captions you already have." />
+    <title>Caption Cues — catch the words captions flatten</title>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/main.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to main content</a>
+    <div id="offline" class="offline" role="status" hidden>You’re offline. The page still works; purchases and license checks need a connection.</div>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Caption Cues home"><span class="brand-mark" aria-hidden="true">CC</span><span>Caption Cues</span></a>
+      <nav aria-label="Primary"><a href="#how">How it works</a><a href="#supporter">Supporter</a><a class="nav-download" href="/downloads/caption-cues-chrome.zip" download>Download <span aria-hidden="true">↓</span></a></nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <picture class="hero-art">
+          <source srcset="/hero-proof-sheet-640.avif 640w, /hero-proof-sheet.avif 1280w" sizes="100vw" type="image/avif" />
+          <source srcset="/hero-proof-sheet-640.webp 640w, /hero-proof-sheet.webp 1280w" sizes="100vw" type="image/webp" />
+          <img src="/hero-proof-sheet.jpg" srcset="/hero-proof-sheet-640.jpg 640w, /hero-proof-sheet.jpg 1280w" sizes="100vw" width="1280" height="853" alt="An abstract tabletop printing press producing strips of cobalt and black halftone marks" fetchpriority="high" decoding="async" />
+        </picture>
+        <div class="hero-copy">
+          <p class="eyebrow"><span aria-hidden="true">●</span> A caption highlighter for Chrome</p>
+          <h1 id="hero-title">Catch the words captions usually flatten.</h1>
+          <p class="lede">Make names, speaker changes, sound cues, and your own easy-to-miss words stand out—right inside captions already available on the page.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="/downloads/caption-cues-chrome.zip" download>Download for Chrome <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="#try-it">Try the rules first</a>
+          </div>
+          <p class="fineprint">Version 1.0 · Local-first · No account · Free core tools</p>
+        </div>
+      </section>
+
+      <section id="try-it" class="proof" aria-labelledby="proof-title">
+        <div class="section-head"><p class="folio">Proof 01</p><div><h2 id="proof-title">One line. The right landmarks.</h2><p>Switch each cue off to see how quickly a useful caption becomes a wall of equal-weight words.</p></div></div>
+        <div class="proof-grid">
+          <div class="caption-stage" aria-label="Caption styling preview">
+            <p class="stage-label">Live preview</p>
+            <p id="demo-caption" class="demo-caption" aria-live="polite"></p>
+            <p class="shortcut"><kbd>Alt</kbd> + <kbd>R</kbd> replays the last line</p>
+          </div>
+          <fieldset class="rule-controls">
+            <legend>Emphasis rules</legend>
+            <label><input data-rule="speakers" type="checkbox" checked /><span><b>Speaker changes</b><small>Label before the colon</small></span></label>
+            <label><input data-rule="names" type="checkbox" checked /><span><b>Names</b><small>Proper names in the line</small></span></label>
+            <label><input data-rule="sounds" type="checkbox" checked /><span><b>Sound cues</b><small>Bracketed descriptions</small></span></label>
+            <label><input data-rule="manual" type="checkbox" checked /><span><b>Saved word: Gate</b><small>A word you chose</small></span></label>
+          </fieldset>
+        </div>
+      </section>
+
+      <section id="how" class="how" aria-labelledby="how-title">
+        <div class="section-head"><p class="folio">Method 02</p><div><h2 id="how-title">It marks up. It doesn’t listen in.</h2><p>Caption Cues works with caption text the page already exposes. It never downloads video, generates a transcript, or attempts to bypass protected streams.</p></div></div>
+        <ol class="steps">
+          <li><span class="step-no">01</span><h3>Turn captions on</h3><p>Start the subtitles or captions offered by your video player.</p></li>
+          <li><span class="step-no">02</span><h3>Choose your cues</h3><p>Enable names, speakers, sounds, or add a word you often miss.</p></li>
+          <li><span class="step-no">03</span><h3>Replay without hunting</h3><p>Press <kbd>Alt</kbd> + <kbd>R</kbd> to return to the last timed cue or reshow the last DOM caption.</p></li>
+        </ol>
+        <aside class="limit-note"><strong>Honest limitation</strong><span>Some protected players draw captions inside video or closed components. If the browser cannot expose that text, Caption Cues leaves it alone and tells you it is waiting.</span></aside>
+      </section>
+
+      <section class="why" aria-labelledby="why-title">
+        <div><p class="folio">Why 03</p><h2 id="why-title">Built for a different kind of “louder.”</h2></div>
+        <blockquote>“I don’t need every caption bigger. I need the name I’m likely to mishear to look different.”</blockquote>
+        <p class="why-copy">Blanket caption styling gives every syllable the same priority. Caption Cues adds a viewer-controlled hierarchy, so the words carrying identity, context, and action become visual anchors.</p>
+      </section>
+
+      <section id="supporter" class="supporter" aria-labelledby="supporter-title">
+        <div class="supporter-copy"><p class="eyebrow">One-time Supporter edition</p><h2 id="supporter-title">Keep the core free. Add more ink.</h2><p>$9 once unlocks the cosmetic Cobalt caption plate and supports ongoing maintenance. Names, sounds, saved words, speaker cues, and replay remain free forever.</p><a class="button primary" href="https://api.sociobot.in/api/v1/products/caption-cues/checkout">Buy Supporter — $9</a><p class="fineprint">Secure checkout from Sociobot. Dodo is merchant of record.</p></div>
+        <form id="restore-form" class="restore"><label for="license">Already bought it? Paste your license</label><div class="restore-row"><input id="license" type="password" autocomplete="off" required /><button type="submit">Verify license</button></div><button id="copy-license" class="copy-license" type="button" hidden>Copy saved license</button><p id="license-status" role="status" aria-live="polite">The extension also accepts this token in its Supporter panel.</p></form>
+      </section>
+
+      <section class="faq" aria-labelledby="faq-title"><p class="folio">Notes 04</p><h2 id="faq-title">Before you press play</h2><details><summary>Does it generate or send my captions anywhere?</summary><p>No. Caption processing happens in your browser. Caption text and saved words are not sent to us.</p></details><details><summary>Which videos work?</summary><p>Pages exposing standard browser text tracks or visible caption DOM can work. Players that hide captions in video pixels or inaccessible closed components cannot be enhanced.</p></details><details><summary>Is this a hearing test or medical profile?</summary><p>No. The controls are personal reading preferences, not diagnosis or medical advice.</p></details></section>
+    </main>
+
+    <footer><div class="brand"><span class="brand-mark" aria-hidden="true">CC</span><span>Caption Cues</span></div><p>Useful emphasis, without another transcript.</p><nav aria-label="Legal"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/B-Divyesh/sf-caption-cues">Source</a></nav><p class="generated-note">Hero artwork was generated for this product with the factory image model; no people or brands are depicted.</p></footer>
+    <script type="module" src="/main.ts"></script>
+  </body>
+</html>

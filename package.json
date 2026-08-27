@@ -1,0 +1,29 @@
+{
+  "name": "caption-cues",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A local-first caption emphasis browser extension.",
+  "scripts": {
+    "dev": "wxt",
+    "dev:site": "vite --config vite.site.config.ts",
+    "prepare": "wxt prepare",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "build:extension": "wxt build",
+    "package:extension": "wxt zip && node scripts/copy-extension.mjs",
+    "build:site": "npm run build:extension && npm run package:extension && vite build --config vite.site.config.ts",
+    "build": "npm run build:site",
+    "check": "npm run typecheck && npm test && npm run build"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^21.1.7",
+    "@types/chrome": "^0.0.321",
+    "jsdom": "^26.1.0",
+    "sharp": "^0.34.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4",
+    "wxt": "^0.20.6"
+  }
+}
