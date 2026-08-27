@@ -9,9 +9,9 @@ could not run the browser-backed PWA test on a clean machine.
 
 ## What changed
 
-- Added `npm run setup:browser`, a project script that invokes the
-  lockfile-pinned local Playwright CLI to install Chromium. It never falls back
-  to a global `npx` version.
+- Added `npm run setup:browser`, a project script that invokes the manifest-
+  and lockfile-pinned local Playwright `1.62.1` CLI to install Chromium. It
+  never falls back to a global `npx` version.
 - Added `npm run setup:browser:ci`, which uses Playwright's supported
   `install --with-deps chromium` for Ubuntu CI workers that also need browser
   runtime libraries.
@@ -45,7 +45,8 @@ npm run check:clean-browser
 Ubuntu CI uses `npm run check:clean-browser:ci`, which includes Playwright's
 supported Linux dependency installation.
 
-Verified locally on 2026-08-27 UTC with `npm run check:clean-browser`:
+Verified locally on 2026-08-27 UTC with `npm run check:clean-browser` after
+`npm ci` from this clean checkout:
 
 - fresh isolated browser cache: Chromium, FFmpeg, and Chromium headless shell
   downloaded from the locked Playwright `1.62.1` dependency;
@@ -57,6 +58,9 @@ Verified locally on 2026-08-27 UTC with `npm run check:clean-browser`:
 - `npm run verify:extension`: pass;
 - `npm run test:pwa-update`: pass;
 - `npm run verify:zip`: pass; all 11 MV3 archive entries validate.
+- `npm run check:clean-browser:ci`: pass; the CI variant installed the
+  supported Ubuntu runtime dependencies in the same new isolated cache before
+  running that full release suite.
 
 The isolated cache was deleted after the successful run. No product behavior,
 privacy, accessibility, or static-host policy changes were needed; verifier-2

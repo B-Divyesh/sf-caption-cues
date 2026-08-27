@@ -28,10 +28,11 @@ npm run dev          # WXT extension development
 npm run dev:site     # landing site development
 ```
 
-`setup:browser` uses this repository's installed Playwright CLI, rather than a
-global `npx` version, and installs Chromium into Playwright's standard cache.
-On an Ubuntu CI worker that also needs OS browser libraries, use
-`npm run setup:browser:ci`; it runs Playwright's supported
+`setup:browser` runs the supported `playwright install chromium` command
+through this repository's lockfile-pinned local CLI (Playwright `1.62.1`),
+rather than a global `npx` version, and installs the matching Chromium into
+Playwright's standard cache. On an Ubuntu CI worker that also needs OS browser
+libraries, use `npm run setup:browser:ci`; it runs Playwright's supported
 `install --with-deps chromium` command. The included GitHub Actions job proves
 the full release gate with a newly-created, isolated browser cache:
 
@@ -43,8 +44,10 @@ npm run check:clean-browser:ci
 ```
 
 The clean-cache command deliberately does not reuse the normal Playwright
-cache. If Chromium or its runtime dependencies cannot be installed, it fails
-before tests run rather than falling back to a host browser.
+cache. It first runs the same explicit provisioning step, then runs the
+release gate in that exact cache. If Chromium or its runtime dependencies
+cannot be installed, it fails before tests run rather than falling back to a
+host browser or silently reusing a compatible-looking browser.
 
 ## Build
 
