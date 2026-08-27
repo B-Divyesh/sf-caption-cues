@@ -1,0 +1,11 @@
+{
+  "slug": "caption-cues",
+  "title": "Caption Cues",
+  "territory": "utilities",
+  "user": "A viewer with high-frequency hearing loss who can follow captions but needs the most easily misheard names, words, and sound cues to stand out.",
+  "smallest_useful_product": "A browser extension that transforms captions already exposed by the page: selectable emphasis rules for names, speaker changes, bracketed sound cues and manually saved words; keyboard replay of the last line.",
+  "success_measure": "In a 20-minute test video, participants request replay for at least 30% fewer lines than with their player's ordinary caption styling.",
+  "artifact_class": "browser-extension",
+  "monetization": "one-time",
+  "constraints": "Only operate on caption DOM/tracks available to the user; no video download or DRM circumvention; rules are assistive preferences, not medical recommendations."
+}
