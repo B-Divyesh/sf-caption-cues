@@ -68,10 +68,11 @@ found those areas passing.
 
 ## Deployment and known gaps
 
-- Deployed `dist/site` as the Standard Azure Static Web App on 2026-08-27 UTC
-  (deployment ID `5ab81ef5-b152-4d00-8808-166d3476888d`).
+- Deployed the verified `dist/site` as the Standard Azure Static Web App on
+  2026-08-27 UTC (deployment ID `01bd1530-a98b-4642-98ec-bf30df77dc81`).
 - <https://caption-cues.sociobot.in/> returned HTTP 200 after deployment. The
-  post-deploy browser check reported a 743 ms navigation, no page or console
+  post-deploy browser check reported an 843 ms navigation, no page or console
   errors, title/lang/one `h1`/`main` present, and no missing image alt text or
-  unnamed buttons.
+  unnamed buttons. The response also retained the committed CSP and static
+  cache policy.
 - No known product or release-gate gaps remain from verifier-2.
