@@ -80,4 +80,6 @@ document.querySelector<HTMLFormElement>('#restore-form')?.addEventListener('subm
   } catch { status.textContent = 'Could not connect. Try again when you are online.'; }
 });
 
-if ('serviceWorker' in navigator && location.protocol === 'https:') void navigator.serviceWorker.register('/service-worker.js');
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  void navigator.serviceWorker.register('/service-worker.js', { updateViaCache: 'none' });
+}

@@ -12,8 +12,10 @@
     "test": "vitest run",
     "build:extension": "wxt build",
     "package:extension": "wxt zip && node scripts/copy-extension.mjs",
-    "build:site": "npm run build:extension && npm run package:extension && vite build --config vite.site.config.ts",
+    "build:site": "npm run build:extension && npm run package:extension && vite build --config vite.site.config.ts && node scripts/build-service-worker.mjs",
     "build": "npm run build:site",
+    "test:pwa-update": "vitest run tests/service-worker-update.test.ts",
+    "verify:extension": "node scripts/verify-extension.mjs",
     "check": "npm run typecheck && npm test && npm run build"
   },
   "devDependencies": {

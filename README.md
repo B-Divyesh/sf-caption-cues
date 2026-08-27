@@ -34,7 +34,11 @@ npm run build:site
 
 That exact command builds and packages the extension, copies the unpacked MV3 output to `dist/extension`, adds `caption-cues-chrome.zip` to the site's downloads, and writes the deployable static site to `dist/site` with `index.html` at its root. `npm run build` is an alias for the same production pipeline.
 
+The finalized site build also generates `dist/site/service-worker.js` from a hash of its release contents. Its shell cache therefore changes with every content release; documents are network-first while versioned build assets are cache-first. Azure Static Web Apps policies are in `site/public/staticwebapp.config.json`: hashed assets are immutable, the worker is always revalidated, and CSP/Permissions-Policy are emitted by the host rather than as a served `_headers` file.
+
 To test the extension locally, open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select `dist/extension`. Open a page with browser-exposed captions, turn captions on, and open Caption Cues from the toolbar.
+
+After building, `npm run verify:extension` loads that exact unpacked output in Chromium and checks DOM-caption emphasis plus `Alt+R` replay. `npm run test:pwa-update` proves a controlled client updates from generated build A to build B and can load build B offline.
 
 ## Privacy and permissions
 
