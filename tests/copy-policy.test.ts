@@ -36,16 +36,30 @@ describe('reviewed public language', () => {
     const readme = readFileSync('README.md', 'utf8');
     const privacy = readFileSync('site/privacy/index.html', 'utf8');
     const claims = readFileSync('.factory/claims.json', 'utf8');
-    for (const source of [home, readme, privacy, claims]) expect(source).toContain(phrase);
+    const audit = readFileSync('.factory/copy-audit.md', 'utf8');
+    for (const source of [home, readme, privacy, claims, audit]) expect(source).toContain(phrase);
+    expect(audit).toContain('| 14 | Support for standard browser caption tracks and selected caption text shown on the page. |');
     for (const variant of ['selected visible caption elements', 'selected visible page captions', 'selected visible caption text exposed by the page']) {
-      expect(publicCopy + claims).not.toContain(variant);
+      expect(publicCopy + claims + audit).not.toContain(variant);
     }
+  });
+
+  it('keeps the audited first-screen wording alongside the source copy', () => {
+    const audit = readFileSync('.factory/copy-audit.md', 'utf8');
+    for (const sentence of [
+      'A caption highlighter for Chrome',
+      'Highlight the caption words you miss.',
+      'For viewers who follow captions but miss names, speaker labels, or sound cues.',
+      'Try it with sample data',
+      'See highlighted captions before you install.',
+      'Download unpacked Chrome extension'
+    ]) expect(audit).toContain(sentence);
   });
 
   it('ships a verb-first catalog sentence within 120 characters', () => {
     const description = readFileSync('.factory/catalog-description.txt', 'utf8').trim();
     expect(description.length).toBeLessThanOrEqual(120);
     expect(description).toMatch(/^Highlight\b/);
-    expect(description).toBe('Highlight missed names, speaker labels, sound cues, and saved words in captions already on the page.');
+    expect(description).toBe('Highlight missed names, speaker labels, sound cues, and saved words in captions shown on the page.');
   });
 });

@@ -1,6 +1,6 @@
 # Caption Cues copy audit
 
-Audited 2026-08-28 after review 2. Counts treat keyboard shortcuts and
+Audited 2026-08-28 after review 3. Counts treat keyboard shortcuts and
 hyphenated terms as one word. No sentence exceeds 22 words. No sentence uses a
 banned marketing word. Compatibility copy now uses one exact phrase for the
 non-track source: “selected caption text shown on the page.”
@@ -10,9 +10,12 @@ non-track source: “selected caption text shown on the page.”
 | Words | Sentence |
 | ---: | --- |
 | 10 | You’re offline. Open the sample to keep trying Caption Cues. |
+| 5 | A caption highlighter for Chrome |
 | 6 | Highlight the caption words you miss. |
 | 13 | For viewers who follow captions but miss names, speaker labels, or sound cues. |
+| 5 | Try it with sample data |
 | 6 | See highlighted captions before you install. |
+| 4 | Download unpacked Chrome extension |
 | 7 | Downloads a ZIP for Chrome Developer mode. |
 | 5 | Caption controls need no account. |
 | 7 | The demo works offline after one visit. |
@@ -43,7 +46,43 @@ non-track source: “selected caption text shown on the page.”
 
 | Words | Sentence |
 | ---: | --- |
-| 16 | Highlight missed names, speaker labels, sound cues, and saved words in captions already on the page. |
+| 16 | Highlight missed names, speaker labels, sound cues, and saved words in captions shown on the page. |
+
+## README sentences
+
+| Words | Sentence |
+| ---: | --- |
+| 12 | Highlight names, speaker labels, sound cues, and saved words in exposed captions. |
+| 12 | Caption Cues is for viewers who follow captions but miss key words. |
+| 11 | The Chrome extension changes caption styling without creating a new transcript. |
+| 14 | Press Alt+R to replay the last timed cue or reshow the latest visible caption. |
+| 5 | Try it with sample data. |
+| 13 | The demo is isolated, works offline after one visit, and needs no account. |
+| 5 | A Chrome Manifest V3 extension. |
+| 14 | Controls for names, speaker labels, sound cues, saved words, text size, and caption background. |
+| 14 | Support for standard browser caption tracks and selected caption text shown on the page. |
+| 12 | Restoration of the page’s original caption state when the extension is disabled. |
+| 9 | Keyboard and popup controls for replaying the last caption. |
+| 11 | A static product site, isolated demo, legal pages, and extension ZIP. |
+| 13 | Caption Cues cannot change captions hidden in video pixels or inaccessible closed components. |
+| 12 | It does not capture audio, download video, or bypass a protected player. |
+| 7 | On Ubuntu CI, use `npm run setup:browser:ci`. |
+| 6 | Every public claim appears in `.factory/claims.json`. |
+| 10 | Run one claim with the exact command in that file. |
+| 4 | Run them all with: |
+| 7 | Build output is in `dist/extension` and `dist/site`. |
+| 6 | The Chrome ZIP is in `dist/site/downloads/caption-cues-chrome.zip`. |
+| 6 | To load the extension, open `chrome://extensions`. |
+| 10 | Turn on Developer mode, choose **Load unpacked**, and select `dist/extension`. |
+| 12 | The release-specific service worker uses network-first page requests and cache-first build assets. |
+| 8 | Hosting rules and security headers are in `site/public/staticwebapp.config.json`. |
+| 8 | Caption text and settings stay in the browser. |
+| 9 | Page access lets the content script find exposed captions. |
+| 12 | The `storage` permission saves settings, and `activeTab` sends status and replay commands. |
+| 7 | The extension makes no external network requests. |
+| 13 | The site and extension contain no analytics, remote fonts, or remote runtime scripts. |
+| 6 | Read the privacy policy and terms. |
+| 4 | MIT — see LICENSE. |
 
 ## Demo and dynamic sentences
 
