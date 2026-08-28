@@ -45,6 +45,8 @@ Run one claim with the exact command in that file. Run them all with:
 npm run test:claims
 ```
 
+After deployment, run `npm run verify:live` against the production origin.
+
 ## Build and load
 
 ```sh

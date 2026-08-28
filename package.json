@@ -22,6 +22,7 @@
     "verify:extension": "node scripts/verify-extension.mjs",
     "verify:zip": "unzip -t dist/site/downloads/caption-cues-chrome.zip",
     "verify:browser": "vitest run tests/browser-qa.test.ts",
+    "verify:live": "node scripts/audit-live.mjs",
     "verify:release": "npm run check && npm run test:claims && npm run verify:extension && npm run test:pwa-update && npm run verify:browser && npm run verify:zip",
     "check:clean-browser": "node scripts/check-clean-playwright-cache.mjs",
     "check:clean-browser:ci": "node scripts/check-clean-playwright-cache.mjs --with-deps",

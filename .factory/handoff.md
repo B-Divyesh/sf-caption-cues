@@ -1,146 +1,102 @@
-# Caption Cues review-2 handoff
-
-## Review-2 status
-
-Independent adversarial review completed on 2026-08-28 UTC without changing
-product code. The result is **FAIL** with one minor copy-consistency finding:
-`F-2-1` in `.factory/review-2.md`. The same supported visible caption source is
-called “selected caption text shown on the page” on landing, “selected visible
-caption elements” in README, and “selected visible page captions” in the claim.
-Unify that term before acceptance.
-
-Verification from a fresh clone at
-`/tmp/caption-cues-review-2.B15huO/repo`:
-
-- `npm ci` passed.
-- All 15 exact claim commands in `.factory/claims.json` passed independently.
-- `npm run test:claims` passed 15/15.
-- `npm test` passed.
-- Live cold browser checks at 390 × 844 and 1440 × 900 confirmed the audience,
-  job, and “Try it with sample data” action above the fold.
-- Live demo verified isolated `demo:` storage, reset, Alt+R replay, same-origin
-  requests, and live service-worker offline reload.
-- Live route/link/metadata/back-focus/Axe checks passed; the designed 404
-  returned HTTP 404.
-
-No earlier review-1 finding was reproduced. See `.factory/review-2.md` for the
-full evidence, copy inventory, and the concrete single-line fix.
-
----
-
-# Caption Cues perfection-loop round 1 handoff
+# Caption Cues perfection-loop round 2 handoff
 
 ## Status
 
-Release candidate repaired, pushed, deployed, and checked cold on production.
-Every blocking, major, minor, copy, and claim finding in `review-1.md` is mapped
-in `polish-1.md`. No known finding remains.
+PASS. Every finding in `review-1.md` and `review-2.md`, including minor copy
+finding F-2-1, is fixed and rechecked on production. No known finding remains.
 
-## Shipped result
+## What changed
 
-- The phone first screen names the job and audience. The isolated sample is the
-  primary action; the unpacked Chrome ZIP and Developer-mode requirement are
-  secondary and explicit.
-- `/?demo=1` enters `/demo/?demo=1`. The three-line sample shows the persistent
-  demo banner, Reset demo, Start for real, emphasis settings, saved words,
-  caption size/background, line navigation, replay, and unsupported state.
-- Demo storage is limited to `demo:` keys. A hostile `license` query writes no
-  ordinary or license storage. Reset and exit preserve ordinary data.
-- `.factory/claims.json` contains 15 observable claims. Each has exactly one
-  tagged test and exact command; a contract test rejects missing or extra tags.
-- Dead paid UI, billing code, license storage, merchant copy, and checkout links
-  remain removed because the external Sociobot checkout is not registered.
-- Home, demo, privacy, terms, and the branded 404 have route titles, metadata,
-  canonical URLs, common chrome, focus handoff, legal links, and 44px targets.
-- Copy uses the terms in `copy-audit.md`; regression tests reject every phrase
-  called out by the review. The catalog sentence is verb-first and 95 characters.
-- The proofreader print-sheet art direction remains intact.
-- The service worker no longer writes fetched responses into a retired release
-  cache. Its controller reports the active cache ID for deterministic update
-  verification. Activation deletes all other `caption-cues-*` caches.
+- Standardized the second supported caption source as “selected caption text
+  shown on the page” across landing, README, Privacy, the claim registry, and
+  its test.
+- Added a copy regression that rejects every old wording variant.
+- Updated the catalog line to: “Highlight missed names, speaker labels, sound
+  cues, and saved words in captions already on the page.” It is verb-first and
+  100 characters without the trailing newline.
+- Advanced the shared site build marker to `1.0.2-r2`.
+- Added `npm run verify:live`, a repeatable production audit for routing,
+  metadata, first-screen copy, route focus, demo isolation, offline behavior,
+  accessibility, touch targets, overflow, reduced motion, and the 404.
+- Preserved the browser-extension artifact, WXT/TypeScript stack, and
+  proofreader print-sheet identity.
 
-## Exact verification
+The complete finding-by-finding mapping is in `.factory/polish-2.md`.
 
-Product commits:
+## Clean-clone verification
 
-- `86210653f13e897c4a49747b09086a476485a5e6` — deterministic demo entry and
-  service-worker update repair.
-- `b6a9258a6120b5b6e4b6620240ea0b7c8d0e51a4` — remove untestable tooling
-  claims and tighten artifact proof.
+Repair commit: `532b3fbee944aff8bad773e238587891471177cd`.
+Clean clone: `/tmp/caption-cues-polish-2.Im0u6q/repo`, created with
+`git clone --no-local`, followed by `npm ci`.
 
-Final clean clone: `/tmp/caption-cues-polish-final.VKp743/repo` at `b6a9258`.
+- All 15 exact commands from `.factory/claims.json` passed independently.
+- `npm run verify:release` passed from the clean clone.
+- `npm test`: 7 files, 51/51 tests passed.
+- `npm run test:claims`: 15/15 claim tests passed.
+- `npm run verify:extension`: caption emphasis and Alt+R replay passed against
+  the packaged extension.
+- `npm run test:pwa-update`: controlled A→B update, retired-cache deletion, and
+  offline B reload passed.
+- `npm run verify:browser`: 9/9 route/mobile/Axe/budget tests passed.
+- `npm run verify:zip`: all 11 ZIP entries passed integrity checks.
+- `npm run check:clean-browser`: downloaded Chromium 1208 into a new empty
+  cache and repeated the complete release gate successfully.
+- Build output: site JS 7.68 KB raw, CSS 15.03 KB raw, extension 35.28 KB,
+  Chrome ZIP 21.97 KB, and service worker cache
+  `caption-cues-8d8bc96c8f35ef59e962`.
+- Local Lighthouse 12.8.2: home and demo each scored 100 performance,
+  accessibility, best practices, and SEO. Home LCP was 1.5 s; demo LCP was
+  0.9 s; both had CLS 0.
 
-Commands run:
+## Production deployment and cold checks
 
-```sh
-npm ci
-# Each of the 15 exact .factory/claims.json commands, independently
-npm run verify:release
-```
+- Live origin: <https://caption-cues.sociobot.in/>
+- Demo: <https://caption-cues.sociobot.in/?demo=1>
+- Deployment ID: `b7e1e27a-78b2-4bb8-947d-cb1bf440b92d`
+- `npm run verify:live`: passed against fresh production browser contexts.
+- Ten route/viewport checks passed: `/`, `/demo/`, `/privacy/`, `/terms/`, and
+  `/not-a-real-route` at 390×844 and 1440×900.
+- Expected statuses passed: home/demo/privacy/terms/download returned 200;
+  the designed product 404 returned HTTP 404.
+- Every route had one H1, one main landmark, `lang=en`, the `1.0.2-r2` build
+  marker, no horizontal overflow, zero serious/critical Axe findings, and no
+  unexpected console errors.
+- All visible phone actions met 44×44 px; reduced motion used `scroll-behavior:
+  auto`; Privacy navigation and browser Back both focused the route H1.
+- Cold `/?demo=1&license=review-token` wrote only
+  `demo:caption-cues:settings`. Reset and Start for real preserved an ordinary
+  sentinel, and Start for real deleted the demo key.
+- Alt+R replayed sample line 2. All 32 requests during the demo exercise were
+  same-origin. The primed demo reloaded offline and advanced to line 2.
+- The seven-link live crawl returned 200 for every home-page destination,
+  including the Chrome ZIP and source repository.
+- Production headers include the self-only CSP, restrictive
+  Permissions-Policy, HSTS, `nosniff`, and strict-origin referrer policy.
+  Hashed assets are immutable; `service-worker.js` is `no-cache`.
+- Live Lighthouse 12.8.2: home 100/100/100/100 with LCP 1.2 s, TBT 20 ms,
+  CLS 0; demo 100/100/100/100 with LCP 0.8 s, TBT 0 ms, CLS 0.
+- Factory URL verifier: home loaded in 636 ms and query demo in 929 ms, with
+  no errors, correct titles, one H1, one main, image alternatives, and named
+  buttons.
 
-Results:
+Evidence is under `.factory/evidence/polish-2-live-home/`,
+`.factory/evidence/polish-2-live-demo/`, and
+`.factory/evidence/polish-2-live-audit/`.
 
-- Exact claim loop: 15/15 passed.
-- Full clean-clone run: 47/47 tests across 7 files passed.
-- Final working-tree `npm test`: 50/50 tests across 7 files passed, including
-  the added reviewed-copy regression suite.
-- Claims suite: 15/15 passed.
-- Extension smoke: emphasis and Alt+R replay passed against the built output.
-- Browser suite: all five routes passed at 390×844 and 1440×900. Axe found no
-  serious or critical issue. Console, semantics, metadata, route focus, back
-  focus, 44px targets, first-screen layout, and 404 checks passed.
-- Privacy: full demo and extension flows made no unapproved request. Caption
-  content did not leave the browser. Demo sentinel tests preserved ordinary data.
-- Build: `dist/site`, `dist/extension`, Manifest V3 output, legal/demo pages,
-  and the Chrome ZIP were produced. ZIP integrity passed for all 11 entries.
-- Budgets: site JS 7.68KB raw, CSS 15.03KB raw, mobile AVIF 15.96KB.
-- `npm run check:clean-browser`: passed after Chromium 1208 was downloaded into
-  a new empty cache.
-- `npm run test:pwa-update`: passed 10 consecutive runs, then passed within all
-  complete gates. Each run proved A controlled the page, B took control, the A
-  cache and `caption-cues-31b0e5257187d71b7be8` were deleted, and B reloaded
-  offline with only its cache remaining.
-- Local Lighthouse: home 100 performance / 100 accessibility / 100 best
-  practices / 100 SEO; demo 99/100/100/100. LCP was 1.7s and 1.8s; CLS 0.
-
-## Production evidence
-
-- Live URL: <https://caption-cues.sociobot.in/>
-- Demo URL: <https://caption-cues.sociobot.in/?demo=1>
-- Deployment ID: `0bc7b917-01c4-4684-953c-253834ebbca0`
-- `/`, query demo, `/demo`, `/privacy`, `/terms`, worker, and ZIP return 200.
-  `/not-a-real-route` returns the designed product page with HTTP 404.
-- Live headers include the self-only content security policy, Permissions
-  Policy, strict-origin referrer policy, and `nosniff`.
-- Factory URL verification passed on live home and query demo with no console
-  errors and correct title, language, H1, main, image alternatives, and buttons.
-- Cold live Playwright audit passed 5 routes × 2 widths with zero unexpected
-  console errors and zero serious/critical Axe findings; 9/9 links were healthy.
-- Live `/?demo=1&license=review-token` redirected into the isolated demo and
-  wrote only demo state. Reset preserved an ordinary sentinel.
-- The primed live demo reloaded offline and advanced to line 2 of 3.
-- Live Cache Storage contained only `caption-cues-7f6b278cd393e0fdd1ad`.
-  The controller-reported stale cache was absent.
-- Live Lighthouse: home 100/100/100/100 and demo 99/100/100/100. Both LCP
-  values were 1.2s with CLS 0; demo TBT was 110ms.
-- Screenshots and verifier JSON are under `.factory/evidence/`; the four paths
-  cited in `polish-1.md` are included with the handoff.
-
-## Run locally
+## Run and verify
 
 ```sh
 npm ci
 npm run setup:browser
 npm run verify:release
-npm run build:site
+npm run verify:live
 ```
 
 Load `dist/extension` through Chrome Developer mode. Serve `dist/site` as the
-static root. The packaged extension is in `dist/site/downloads/`.
+static root. The packaged extension is at
+`dist/site/downloads/caption-cues-chrome.zip`.
 
-## Known gaps
+## Known gaps and next steps
 
-None in the accepted free release. A paid Supporter offer is intentionally not
-shown because its external checkout does not exist. Add it only after the
-Sociobot product is registered and checkout, merchant, restore, and license
-claims have passing tests.
+None for the accepted free release. A paid offer remains intentionally absent
+until a real Sociobot checkout is registered and can be covered by claims.

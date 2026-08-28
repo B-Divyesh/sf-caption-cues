@@ -1,8 +1,9 @@
 # Caption Cues copy audit
 
-Audited 2026-08-28. Counts treat keyboard shortcuts and hyphenated terms as
-one word. No sentence exceeds 22 words. No sentence uses a banned marketing
-word.
+Audited 2026-08-28 after review 2. Counts treat keyboard shortcuts and
+hyphenated terms as one word. No sentence exceeds 22 words. No sentence uses a
+banned marketing word. Compatibility copy now uses one exact phrase for the
+non-track source: “selected caption text shown on the page.”
 
 ## Landing page sentences
 
@@ -38,6 +39,12 @@ word.
 | 8 | Highlights selected words in captions you already use. |
 | 10 | Original proof-sheet artwork was generated with the factory image model. |
 
+## Catalog sentence
+
+| Words | Sentence |
+| ---: | --- |
+| 16 | Highlight missed names, speaker labels, sound cues, and saved words in captions already on the page. |
+
 ## Demo and dynamic sentences
 
 | Words | Sentence |
@@ -64,6 +71,7 @@ word.
 | Description in brackets | sound cue |
 | User-added match | saved word |
 | Caption surface color | caption background |
-| Browser-visible caption source | exposed caption text |
+| Caption text available to the browser | exposed caption text |
+| Supported non-track source | selected caption text shown on the page |
 | Repeating the recent cue | replay the last line |
 | Downloaded install artifact | unpacked Chrome extension ZIP |
