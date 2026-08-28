@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4ebd8" />
+    <meta name="description" content="Highlight names, speaker labels, sound cues, and saved words in captions already shown by a page." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Caption Cues" />
+    <meta property="og:title" content="Caption Cues — highlight easy-to-miss caption words" />
+    <meta property="og:description" content="Highlight names, speaker labels, sound cues, and saved words in captions already shown by a page." />
+    <meta property="og:url" content="https://caption-cues.sociobot.in/" />
+    <meta property="og:image" content="https://caption-cues.sociobot.in/social-preview.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Caption Cues — highlight easy-to-miss caption words" />
+    <meta name="twitter:description" content="Highlight names, speaker labels, sound cues, and saved words in captions already shown by a page." />
+    <meta name="twitter:image" content="https://caption-cues.sociobot.in/social-preview.jpg" />
+    <title>Caption Cues — highlight easy-to-miss caption words</title>
+    <link rel="canonical" href="https://caption-cues.sociobot.in/" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script type="module" crossorigin src="/assets/home-DuFD-D05.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/shared-MkaMxGDX.js">
+    <link rel="modulepreload" crossorigin href="/assets/caption-parser-CWAQ-qRy.js">
+    <link rel="stylesheet" crossorigin href="/assets/style-CUaQ5Qsg.css">
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to main content</a>
+    <div id="offline" class="offline" role="status" hidden>You’re offline. Open the sample to keep trying Caption Cues.</div>
+    <div id="route-status" class="sr-only" role="status" aria-live="polite"></div>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Caption Cues home"><span class="brand-mark" aria-hidden="true">CC</span><span class="brand-name">Caption Cues</span></a>
+      <nav aria-label="Primary"><a href="/demo/">Demo</a><a href="#how">How it works</a><a href="/privacy/">Privacy</a><a class="nav-download" href="/downloads/caption-cues-chrome.zip" download>Download ZIP <span aria-hidden="true">↓</span></a></nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <picture class="hero-art">
+          <source srcset="/hero-proof-sheet-640.avif 640w, /hero-proof-sheet.avif 1280w" sizes="100vw" type="image/avif" />
+          <source srcset="/hero-proof-sheet-640.webp 640w, /hero-proof-sheet.webp 1280w" sizes="100vw" type="image/webp" />
+          <img src="/hero-proof-sheet.jpg" srcset="/hero-proof-sheet-640.jpg 640w, /hero-proof-sheet.jpg 1280w" sizes="100vw" width="1280" height="853" alt="Abstract paper caption strips moving through a cobalt proofing press" fetchpriority="high" decoding="async" />
+        </picture>
+        <div class="hero-copy">
+          <p class="eyebrow"><span aria-hidden="true">●</span> A caption highlighter for Chrome</p>
+          <h1 id="hero-title" tabindex="-1">Highlight the caption words you miss</h1>
+          <p class="lede">For viewers who follow captions but miss names, speaker labels, or sound cues.</p>
+          <div class="hero-actions">
+            <div><a class="button primary" href="/?demo=1">Try it with sample data <span aria-hidden="true">→</span></a><p>See highlighted captions before you install.</p></div>
+            <div><a class="button secondary" href="/downloads/caption-cues-chrome.zip" download>Download unpacked Chrome extension <span aria-hidden="true">↓</span></a><p>Downloads a ZIP for Chrome Developer mode.</p></div>
+          </div>
+          <ul class="facts" aria-label="Product facts"><li>Caption controls need no account.</li><li>The demo works offline after one visit.</li><li>All highlighting and replay tools are free.</li></ul>
+        </div>
+      </section>
+
+      <section id="preview" class="proof" aria-labelledby="proof-title">
+        <div class="section-head"><p class="folio">Caption preview</p><div><h2 id="proof-title">See each highlighted caption part</h2><p>Switch a rule off to compare the same caption without that mark.</p></div></div>
+        <div class="proof-grid">
+          <div class="caption-stage" aria-label="Caption styling preview">
+            <p class="stage-label">Live preview</p>
+            <p id="demo-caption" class="demo-caption" aria-live="polite"></p>
+            <p class="shortcut"><kbd>Alt</kbd> + <kbd>R</kbd> replays the last line</p>
+          </div>
+          <fieldset class="rule-controls">
+            <legend>Emphasis rules</legend>
+            <label><input data-rule="speakers" type="checkbox" checked /><span><b>Speaker labels</b><small>Text before the colon</small></span></label>
+            <label><input data-rule="names" type="checkbox" checked /><span><b>Names</b><small>Names in the line</small></span></label>
+            <label><input data-rule="sounds" type="checkbox" checked /><span><b>Sound cues</b><small>Descriptions in brackets</small></span></label>
+            <label><input data-rule="manual" type="checkbox" checked /><span><b>Saved word: Gate</b><small>A word you chose</small></span></label>
+          </fieldset>
+        </div>
+      </section>
+
+      <section id="how" class="how" aria-labelledby="how-title">
+        <div class="section-head"><p class="folio">How Caption Cues works</p><div><h2 id="how-title">Uses caption text already on the page</h2><p>Caption Cues reads exposed caption text. It does not capture audio, download video, or create a transcript.</p></div></div>
+        <ol class="steps">
+          <li><span class="step-no">01</span><h3>Turn captions on</h3><p>Start the captions offered by your video player.</p></li>
+          <li><span class="step-no">02</span><h3>Choose your cues</h3><p>Mark names, speaker labels, sound cues, or a saved word.</p></li>
+          <li><span class="step-no">03</span><h3>Replay the last line</h3><p>Press <kbd>Alt</kbd> + <kbd>R</kbd> to replay a timed cue or reshow visible caption text.</p></li>
+        </ol>
+        <aside class="limit-note"><strong>When a player is unsupported</strong><span>Caption Cues leaves hidden caption pixels and closed components unchanged. It tells you when exposed caption text is unavailable.</span></aside>
+      </section>
+
+      <section class="why" aria-labelledby="why-title">
+        <div><p class="folio">Why selective highlighting helps</p><h2 id="why-title">Make key caption words easier to spot</h2></div>
+        <blockquote>“I don’t need every caption bigger. I need the name I might mishear to look different.”</blockquote>
+        <p class="why-copy">You choose which names, sound cues, speaker labels, and saved words stand out.</p>
+      </section>
+
+      <section class="faq" aria-labelledby="faq-title"><p class="folio">Installation and compatibility</p><h2 id="faq-title">Install and use the extension</h2><details><summary>How do I install the download?</summary><p>Unzip it. Open <code>chrome://extensions</code>. Turn on Developer mode, choose “Load unpacked,” then select the unzipped folder.</p></details><details><summary>Does it send my captions anywhere?</summary><p>No. Caption text and settings stay in your browser. Caption Cues has no analytics or remote runtime scripts.</p></details><details><summary>Which videos work?</summary><p>It supports standard browser caption tracks and selected caption text shown on the page.</p></details><details><summary>Which videos do not work?</summary><p>It cannot change captions hidden in video pixels or inaccessible closed components.</p></details></section>
+    </main>
+
+    <footer class="site-footer"><div><a class="brand" href="/" aria-label="Caption Cues home"><span class="brand-mark" aria-hidden="true">CC</span><span class="brand-name">Caption Cues</span></a><p>Highlights selected words in captions you already use.</p></div><nav aria-label="Footer"><a href="/demo/">Demo</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/B-Divyesh/sf-caption-cues" target="_blank" rel="noreferrer">Source <span class="sr-only">(opens in a new tab)</span></a></nav><p class="build-note">Built by Param Factory · Build 1.0.5-r5</p><p class="generated-note">Original proof-sheet artwork was generated with the factory image model.</p></footer>
+  </body>
+</html>

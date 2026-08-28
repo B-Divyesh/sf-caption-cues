@@ -93,7 +93,20 @@ the post-deploy audit at `.factory/evidence/polish-5-live-audit/`.
 
 ## Post-deploy result
 
-The deployed artifact and cold URL result are recorded after push in the live
-audit JSON and screenshots. The catalog description remains the required
-verb-first, 97-character sentence: “Highlight names, speaker labels, sound
-cues, and saved words in captions already shown by a page.”
+The work-order static deployment of `dist/site` is live at
+`https://caption-cues.sociobot.in/`. `npm run verify:live` passed every route
+at 390 × 844 and 1440 × 900: expected status and title, one H1/main, no
+overflow, zero serious/critical Axe findings, first-screen/focus restoration,
+demo isolation, 32 same-origin requests, and offline demo replay. The cold URL
+check reported no errors, correct language/landmarks/alt text, and a 2444 ms
+load. Local/live HTML and ZIP SHA-256 values match in `hashes.txt`; Lighthouse
+mobile scored 100 Performance, 100 Accessibility, 100 Best Practices, and 100
+SEO (LCP 1.3 s, TBT 40 ms, CLS 0).
+
+Evidence: `.factory/evidence/polish-5-live-audit/audit.json`, `headers.txt`,
+`hashes.txt`, `home-mobile.png`, `demo-mobile.png`, `privacy-desktop.png`, and
+`404-desktop.png`; `.factory/evidence/polish-5-cold-url/verify.json`; and
+`.factory/evidence/polish-5-lighthouse/report.json`. The catalog description
+remains the required verb-first, 97-character sentence: “Highlight names,
+speaker labels, sound cues, and saved words in captions already shown by a
+page.”
