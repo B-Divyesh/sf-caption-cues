@@ -1,64 +1,43 @@
-# Caption Cues — polish round 4 handoff
+# Caption Cues — review round 5 handoff
 
 ## Status
 
-**PASS.** Repair commit: `eae9efb60af56f46e574f8a9785d9542d2e49e6c`
-(`fix: prove unsupported caption handling`). Deployed as Azure Static Web Apps
-deployment `98c1241f-041b-48a2-808e-91bc5ea42928` to
-<https://caption-cues.sociobot.in/>.
+**FAIL.** Review-only commit for work order `caption-cues-review-5`; product
+source was not modified.
 
-## What changed
+## What was done
 
-- The built extension now returns its page status through Chrome's explicit
-  message-response channel. On a page without exposed caption text, the popup
-  says: “Waiting for exposed caption text. Start captions; some players cannot
-  expose it.” It does not alter an unrecognised caption surface.
-- `@claim:hidden-caption-limit` now loads the packaged extension in a fresh
-  profile, asserts exact unchanged unsupported content, and reads that popup
-  status. The claim registry describes this real sandbox.
-- The popup now says “Caption controls” and its saved-word action says
-  “Save word.” Its shortcut is consistently shown as `Alt+R`.
-- `.factory/copy-audit.md` was regenerated as a 180+ row rendered-copy audit.
-  Its test recalculates every whitespace word count and confirms the string in
-  the named landing, demo, popup, README, or catalog source.
-- The catalog sentence is verb-first and 97 characters:
-  “Highlight names, speaker labels, sound cues, and saved words in captions
-  already shown by a page.” Footer build labels are `1.0.4-r4`.
+- Reviewed the live site cold in fresh 390 × 844 and 1440 × 900 browser
+  contexts, including demo, legal routes, metadata, 404, links, focus, offline
+  operation, request origins, and storage isolation.
+- Read the brief, design thesis, claims registry, demo documentation, every
+  prior review/polish/verification record, and prior handoff.
+- Created a fresh clone at `/tmp/caption-cues-review5.xOE38s/repo`; installed
+  dependencies and Chromium; ran each of the 15 exact claim commands,
+  `npm run test:claims` (15/15), `npm test`, release artifact checks, and
+  `npm run verify:live`.
+- Wrote the complete review and copy inventory in `.factory/review-5.md`.
 
-## Verification
+## Known gaps
 
-- Fresh remote clone at `eae9efb`: `npm ci`, `npm run setup:browser`, then all
-  15 exact commands from `.factory/claims.json` completed. The aggregate
-  `npm run test:claims` result was **15/15 passed**.
-- Fresh-clone release checks passed: `npm run verify:release`,
-  `npm run verify:extension`, `npm run test:pwa-update`,
-  `npm run verify:browser` (**9/9**, including Axe at 390 px and desktop), and
-  `npm run verify:zip`.
-- The isolated empty-browser-cache gate, `npm run check:clean-browser`,
-  downloaded the lockfile-pinned Chromium and completed the release suite.
-- Live checks passed: `npm run verify:live`,
-  `/opt/fleet/lib/verify-url.sh https://caption-cues.sociobot.in/
-  .factory/evidence/polish-4-live-home`, and a live/local SHA-256 comparison
-  for both `/` and `/downloads/caption-cues-chrome.zip`.
-- Live Lighthouse evidence is
-  `.factory/evidence/polish-4-live-home/lighthouse.json`: Performance 100,
-  Accessibility 100, Best Practices 100, SEO 100; FCP 0.9 s, LCP 1.2 s,
-  TBT 0 ms, CLS 0.
+- **F-5-1 BLOCKING:** `@claim:caption-emphasis` proves all four cue types only
+  in the demo, not the packaged extension. Its extension companion tests do
+  not observe a styled name or saved word. Extend that existing tagged test to
+  exercise the installed extension and assert all four rendered treatments.
+- **F-5-2 MINOR:** README uses unexplained “Manifest V3” terminology. Rewrite
+  it as “A Chrome extension.”
 
-## Evidence
+## How to verify after repair
 
-- Live route/a11y/demo report:
-  `.factory/evidence/polish-4-live-audit/audit.json`
-- Live screenshots:
-  `.factory/evidence/polish-4-live-audit/home-mobile.png`,
-  `demo-mobile.png`, `privacy-desktop.png`, and `404-desktop.png`
-- Cold URL verifier screenshots and report:
-  `.factory/evidence/polish-4-live-home/screenshot-desktop.png`,
-  `screenshot-mobile.png`, and `verify.json`
-- Complete cumulative finding map: `.factory/polish-4.md`
+```sh
+npm ci
+npm run setup:browser
+npm run test:claim -- @claim:caption-emphasis
+npm run test:claims
+npm test
+npm run verify:live
+```
 
-## Known gaps / next steps
-
-None. Caption Cues intentionally works only with browser-exposed text tracks
-and selected caption text shown on the page; hidden pixels and inaccessible
-closed components stay unchanged and now have a tested popup waiting state.
+Then repeat the cold live review at 390 px and desktop, specifically confirming
+the test observes speaker, name, saved-word, and sound-cue emphasis in
+`dist/extension` rather than only the sample demo.
