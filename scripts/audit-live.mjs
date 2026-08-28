@@ -38,7 +38,7 @@ try {
       assert.equal(state.h1, 1);
       assert.equal(state.main, 1);
       assert.equal(state.overflow, false, `${route} overflows at ${viewport.width}px`);
-      assert.equal(state.build, 'Built by Param Factory · Build 1.0.6-r6');
+      assert.equal(state.build, 'Built by Param Factory · Build 1.0.7-r7');
       if (route !== '/not-a-real-route') {
         assert.equal(await page.locator('link[rel="canonical"]').count(), 1);
         assert.equal(await page.locator('meta[property="og:image"]').getAttribute('content'), `${expectedOrigin}/social-preview.jpg`);
