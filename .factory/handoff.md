@@ -1,48 +1,72 @@
-# Caption Cues — review round 6 handoff
+# Caption Cues — polish round 6 handoff
 
 ## Status
 
-**FAIL.** Review 6 found one blocking unlisted claim, one major honesty issue,
-and six minor copy/evidence issues. Product code was not modified.
+**PASS.** Review-6 F-6-1 through F-6-8 and every retained earlier finding are
+resolved in repair commit `94bc25c38a430a0684c96ab7de1f660119c24830`, pushed
+to `main` and deployed to <https://caption-cues.sociobot.in/>.
 
-## What was done
+## What changed
 
-- Audited the live home cold at 390 × 844 and 1440 × 900.
-- Exercised the one-click demo, Reset, Start for real, separate storage,
-  same-origin network boundary, and offline reload.
-- Ran all 15 exact `.factory/claims.json` commands independently from clean
-  clone `/tmp/caption-cues-review6-clean.h5tDcw/repo`.
-- Re-ran `npm test` (55/55 passed), the live route/Axe audit, metadata/focus
-  checks, and a full link crawl.
-- Rechecked every earlier review and verification finding against live behavior
-  and source.
-- Recorded the result in `.factory/review-6.md`.
+- Removed the untestable accessibility-outcome wording and the unattributed
+  testimonial styling. The section now makes only the observable emphasis
+  behavior claim that the packaged extension test proves.
+- Rewrote compatibility, privacy, README offline, and permission language in
+  plain viewer terms. The supported source now has one consistent name:
+  `caption text the page makes available`.
+- Renamed the related registered claim/test to
+  `caption-text-page-makes-available`; it still proves both a page-caption
+  surface and a browser TextTrack using the built extension.
+- Completed `.factory/copy-audit.md` with the missing offline status, image
+  alternative text, and dynamic preview caption. A source-derived inverse test
+  now fails if any landing sentence, status, alt text, or dynamic sample is
+  omitted.
+- Kept the one-click isolated `?demo=1` route, banner/reset/exit, offline shell,
+  real routing/404, metadata, focus handoff, legal links, mobile targets, and
+  proof-sheet visual identity intact. Build ID is `1.0.6-r6`.
+- Updated the verb-first catalog description.
 
-## Verification summary
+## Exact verification evidence
 
-- Registered claim tests: 15/15 passed.
-- Full suite: 55/55 passed across seven files.
-- Live routes: home/demo/privacy/terms 200; designed unknown route 404.
-- Live Axe: zero serious/critical findings at phone and desktop widths.
-- Demo: only `demo:caption-cues:settings` was written; ordinary sentinels were
-  unchanged; all 32 observed requests were same-origin; offline replay worked.
-- Live and local home HTML/ZIP SHA-256 values matched exactly.
+- Clean clone: `/tmp/caption-cues-polish-6-clean.D2OXCe/repo` at
+  `94bc25c`; `npm ci`, `npm run setup:browser`, then every one of the 15 exact
+  commands in `.factory/claims.json` ran independently and passed.
+- Local: `npm test` passed 58 tests across seven files. `npm run
+  verify:extension`, `npm run verify:zip`, `npm run test:pwa-update`, and
+  `npm run verify:release` passed.
+- Local `verify-url.sh`: 200, no console errors, correct title/lang/H1/main,
+  zero missing image alts, and zero unnamed buttons. Lighthouse mobile report:
+  99 performance, 100 accessibility, 1.662 s LCP, 0 CLS at
+  `.factory/evidence/polish-6-local/lighthouse-mobile.json`.
+- Live `npm run verify:live -- https://caption-cues.sociobot.in/
+  .factory/evidence/polish-6-live-audit`: home/demo/privacy/terms 200 and
+  designed unknown route 404 at phone and desktop widths; zero serious/critical
+  Axe findings; first-screen/focus, demo isolation, same-origin requests (32),
+  and offline demo all passed.
+- Live `verify-url.sh`: 200, no console errors, title/lang/H1/main correct,
+  no missing alts or unnamed buttons. Screenshots and JSON reports live under
+  `.factory/evidence/polish-6-live-audit/` and
+  `.factory/evidence/polish-6-live-verify/`.
+- A final cold-live Playwright recheck asserted all new F-6 wording, absence of
+  the rejected language, the demo's unsupported-caption status, Privacy text,
+  and the HTTP 404.
 
-## Remaining work
-
-Resolve F-6-1 through F-6-8 in `.factory/review-6.md`. F-6-1 is blocking:
-“Make key caption words easier to spot” is an unlisted outcome claim not proven
-by the rendering test. The review also requires honest attribution/removal of
-the blockquote, plain compatibility/privacy/README language, and a complete
-copy audit with inverse coverage.
-
-## Re-run
+## Run again
 
 ```sh
 npm ci
 npm run setup:browser
-npm test
+npm run verify:release
 npm run verify:live
 ```
 
-Then run every exact command in `.factory/claims.json` from a fresh clone.
+For a claim-specific run, use the exact command stored beside that claim in
+`.factory/claims.json`.
+
+## Known gaps
+
+No product gaps remain. Tooling note: the standalone Axe CLI could not use the
+container's Playwright Chromium because its downloaded ChromeDriver targets a
+different browser version; the repository's Playwright Axe integration passed
+every production route at both required widths and is the accessibility
+evidence.
