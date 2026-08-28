@@ -45,6 +45,8 @@ Motion lasts 160–240ms and only communicates an origin: captions lift 6px into
 ## Original asset plan and provenance
 
 - `public/hero-proof-sheet.webp`: original generated editorial still life showing abstract caption strips passing through a compact proofing press, used only as metaphor on the landing page. It does not depict a real player or claim generated captions.
+- `public/social-preview.jpg`: 1200 × 630 crop composed from the same original proof-sheet artwork for link previews.
+- `public/apple-touch-icon.png`: 180 × 180 raster export of the hand-authored CC icon.
 - Extension icon and interface glyphs: hand-authored SVG/CSS using the `CC` registration-mark motif; created in-repository, MIT with the product.
 - Halftone fields: CSS radial gradients, deterministic and hand-authored.
 
@@ -53,3 +55,4 @@ Motion lasts 160–240ms and only communicates an origin: captions lift 6px into
 **Use case:** stylized-concept. **Subject:** a compact tabletop proofing press feeding layered blank caption strips, several short paper rectangles with abstract ink blocks but no letters. **World/materials:** tactile uncoated paper, imperfect screen print, halftone dots, metal registration pins. **Composition:** landscape 3:2, object on the right half with calm negative paper space on the left, slightly elevated editorial angle. **Light/lens:** soft northern studio light, crisp macro paper grain, modest depth. **Palette words:** warm newsprint, carbon black, cobalt blue, safety orange. **Negative list:** people, ears, medical devices, screens, readable text, letters, logos, watermarks, glossy 3D gradients, stock-photo polish, brands, copyrighted characters.
 
 Generated with the factory image deployment via `/opt/fleet/lib/gen-image.sh` on 2026-08-27. The resulting image is original project artwork. Source PNG and prompt metadata live in `assets/src/`; optimized WebP ships in the site. Generated-imagery disclosure appears in the footer.
+The accepted source SHA-256 is `caa9d516c08614403b9540b2a95499363adf7a537fbbb531b6f9749bf42107f4`. The social crop was rendered locally with Sharp on 2026-08-28; it introduces no new imagery.

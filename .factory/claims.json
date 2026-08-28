@@ -1,0 +1,114 @@
+[
+  {
+    "id": "caption-emphasis",
+    "claim": "Highlights names, speaker labels, sound cues, and saved words.",
+    "where": "landing page, demo, extension popup, README",
+    "test": "npm run test:claim -- @claim:caption-emphasis",
+    "sandbox": "fresh demo context; assert each sample fragment has its intended visible treatment"
+  },
+  {
+    "id": "demo-isolation",
+    "claim": "Demo changes use a separate namespace and do not change ordinary site or extension data.",
+    "where": "demo banner, privacy page, demo documentation",
+    "test": "npm run test:claim -- @claim:demo-isolation",
+    "sandbox": "fresh demo context with sentinel ordinary keys; change and reset demo; assert sentinels remain"
+  },
+  {
+    "id": "site-offline",
+    "claim": "The demo works offline after one visit.",
+    "where": "landing facts, README",
+    "test": "npm run test:claim -- @claim:site-offline",
+    "sandbox": "fresh context; prime /demo/, wait for service worker, go offline, reload, and change caption line"
+  },
+  {
+    "id": "no-account-free-tools",
+    "claim": "Caption controls need no account, and all highlighting and replay tools are free.",
+    "where": "landing facts, README",
+    "test": "npm run test:claim -- @claim:no-account-free-tools",
+    "sandbox": "fresh demo context without credentials or license; exercise every caption and replay control"
+  },
+  {
+    "id": "replay-last-line",
+    "claim": "Alt+R and the replay control replay the last caption line.",
+    "where": "landing preview, how-it-works section, demo, extension popup, README",
+    "test": "npm run test:claim -- @claim:replay-last-line",
+    "sandbox": "fresh demo context; replay two lines by keyboard and button; assert announced line numbers"
+  },
+  {
+    "id": "exposed-caption-sources",
+    "claim": "Supports standard browser caption tracks and selected visible page captions.",
+    "where": "landing compatibility section, README",
+    "test": "npm run test:claim -- @claim:exposed-caption-sources",
+    "sandbox": "fresh extension profile; load local DOM and TextTrack fixtures; assert both are visibly enhanced"
+  },
+  {
+    "id": "hidden-caption-limit",
+    "claim": "Hidden or inaccessible captions stay unchanged and show a waiting state.",
+    "where": "landing limitation, demo compatibility check, README",
+    "test": "npm run test:claim -- @claim:hidden-caption-limit",
+    "sandbox": "fresh demo context; run unsupported fixture; assert content is unchanged and waiting status appears"
+  },
+  {
+    "id": "no-media-capture",
+    "claim": "Caption Cues does not capture audio, download video, create a transcript, or bypass protected players.",
+    "where": "landing how-it-works section, terms, README",
+    "test": "npm run test:claim -- @claim:no-media-capture",
+    "sandbox": "fresh extension profile and local fixture; intercept the complete caption and replay flow; assert no media or transcript request"
+  },
+  {
+    "id": "local-caption-data",
+    "claim": "Caption text and settings stay in the browser.",
+    "where": "landing FAQ, privacy page, extension popup, README",
+    "test": "npm run test:claim -- @claim:local-caption-data",
+    "sandbox": "fresh extension profile; save settings; inspect extension storage and request URLs for caption payloads"
+  },
+  {
+    "id": "overlay-restoration",
+    "claim": "Disabling Caption Cues restores the page's original caption state.",
+    "where": "README",
+    "test": "npm run test:claim -- @claim:overlay-restoration",
+    "sandbox": "fresh extension profile; enhance DOM and TextTrack fixtures, disable through storage, assert original text and track mode"
+  },
+  {
+    "id": "package-output",
+    "claim": "The build produces a static site, unpacked extension, and Chrome ZIP.",
+    "where": "README",
+    "test": "npm run test:claim -- @claim:package-output",
+    "sandbox": "clean build; assert every documented artifact exists and the ZIP is non-empty"
+  },
+  {
+    "id": "offline-cache-policy",
+    "claim": "The release worker versions its offline shell, serves pages network-first, and serves build assets cache-first.",
+    "where": "README",
+    "test": "npm run test:claim -- @claim:offline-cache-policy",
+    "sandbox": "clean build; inspect generated worker for release hash, both strategies, and demo shell entry"
+  },
+  {
+    "id": "permission-minimum",
+    "claim": "The extension uses only page access, storage, and activeTab for captions, settings, status, and replay.",
+    "where": "README",
+    "test": "npm run test:claim -- @claim:permission-minimum",
+    "sandbox": "clean build; inspect packaged manifest and assert exact permissions and host patterns"
+  },
+  {
+    "id": "no-tracking-runtime",
+    "claim": "The site and extension contain no analytics, remote fonts, remote runtime scripts, or extension network calls.",
+    "where": "landing FAQ, privacy page, README",
+    "test": "npm run test:claim -- @claim:no-tracking-runtime",
+    "sandbox": "fresh demo context plus packaged manifest; intercept requests and inspect all script, stylesheet, preload, and host entries"
+  },
+  {
+    "id": "generated-art",
+    "claim": "The original proof-sheet artwork was generated with the factory image model.",
+    "where": "site footer, design documentation",
+    "test": "npm run test:claim -- @claim:generated-art",
+    "sandbox": "clean checkout; compare source SHA-256 with provenance metadata and assert the derived social image ships"
+  },
+  {
+    "id": "node-runtime",
+    "claim": "Development uses Node.js 20 or newer.",
+    "where": "README",
+    "test": "npm run test:claim -- @claim:node-runtime",
+    "sandbox": "test process; assert the running Node major version meets the documented baseline"
+  }
+]

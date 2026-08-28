@@ -1,74 +1,85 @@
 # Caption Cues
 
-Caption Cues is a local-first Chrome extension for viewers who can follow captions but need the easiest-to-miss parts to stand out. It emphasizes proper names, speaker labels, bracketed sound cues, and words the viewer saves. `Alt+R` replays the most recent timed cue or reshows the latest caption exposed in the page DOM.
+Highlight names, speaker labels, sound cues, and saved words in exposed captions.
 
-It works only with caption text a page already exposes through standard `TextTrack` cues or supported visible caption elements. It does not generate captions, capture audio, download video, or bypass protected players.
+Caption Cues is for viewers who follow captions but miss key words. The Chrome
+extension changes caption styling without creating a new transcript. Press
+`Alt+R` to replay the last timed cue or reshow the latest visible caption.
+
+[Try it with sample data](https://caption-cues.sociobot.in/demo/). The demo is
+isolated, works offline after one visit, and needs no account.
 
 ## What ships
 
-- MV3 extension built with WXT and TypeScript
-- Popup controls for each emphasis rule, caption size, plate theme, and saved words
-- Native text-track overlay with restoration when disabled
-- Conservative DOM-caption enhancement for YouTube, Vimeo, Video.js, and accessible caption regions
-- Keyboard and popup replay paths
-- Static product site with an interactive rule preview, responsive layout, offline shell, privacy policy, terms, and packaged extension download
-- Optional one-time $9 Supporter license through Sociobot; it unlocks only the cosmetic Cobalt theme, while all comprehension features remain free
+- A Chrome Manifest V3 extension built with Web Extension Toolkit and TypeScript.
+- Controls for names, speaker labels, sound cues, saved words, text size, and caption background.
+- Support for standard browser caption tracks and selected visible caption elements.
+- Restoration of the page’s original caption state when the extension is disabled.
+- Keyboard and popup controls for replaying the last caption.
+- A responsive product site, isolated demo, offline shell, legal pages, and extension ZIP.
 
-## Develop
+Caption Cues cannot change captions hidden in video pixels or inaccessible
+closed components. It does not capture audio, download video, or bypass a
+protected player.
 
-Requires Node.js 20 or newer. The service-worker update and extension smoke
-tests launch the lockfile-pinned Playwright Chromium, so provision it explicitly
-after every fresh `npm ci` (or whenever the Playwright cache is removed).
+## Run and test
+
+Use Node.js 20 or newer.
 
 ```sh
 npm ci
 npm run setup:browser
-npm run check        # typecheck, all tests (including the browser test), and build
-npm run dev          # WXT extension development
-npm run dev:site     # landing site development
+npm run check
 ```
 
-`setup:browser` runs the supported `playwright install chromium` command
-through this repository's lockfile-pinned local CLI (Playwright `1.62.1`),
-rather than a global `npx` version, and installs the matching Chromium into
-Playwright's standard cache. On an Ubuntu CI worker that also needs OS browser
-libraries, use `npm run setup:browser:ci`; it runs Playwright's supported
-`install --with-deps chromium` command. The included GitHub Actions job proves
-the full release gate with a newly-created, isolated browser cache:
+The browser tests use Playwright 1.58.2 from the lockfile. Run
+`npm run setup:browser` after `npm ci` or after clearing its browser cache. On
+Ubuntu CI, use `npm run setup:browser:ci` to add Chromium system libraries.
+
+Run the release gate with a new browser cache:
 
 ```sh
-npm ci
-npm run check:clean-browser       # fresh cache, provision Chromium, then full release verification
-# Ubuntu CI only (also provisions Linux browser libraries):
-npm run check:clean-browser:ci
+npm run check:clean-browser
 ```
 
-The clean-cache command deliberately does not reuse the normal Playwright
-cache. It first runs the same explicit provisioning step, then runs the
-release gate in that exact cache. If Chromium or its runtime dependencies
-cannot be installed, it fails before tests run rather than falling back to a
-host browser or silently reusing a compatible-looking browser.
+This command installs the pinned Chromium build. It stops if the install fails.
+It then runs type checks, tests, the production build, extension browser checks,
+the offline update check, accessibility checks, and ZIP validation.
 
-## Build
+Every public claim appears in [`.factory/claims.json`](.factory/claims.json).
+Run one claim with the exact command in that file. Run them all with:
+
+```sh
+npm run test:claims
+```
+
+## Build and load
 
 ```sh
 npm run build:site
 ```
 
-That exact command builds and packages the extension, copies the unpacked MV3 output to `dist/extension`, adds `caption-cues-chrome.zip` to the site's downloads, and writes the deployable static site to `dist/site` with `index.html` at its root. `npm run build` is an alias for the same production pipeline.
+The build writes the unpacked extension to `dist/extension`. It writes the ZIP
+to `dist/site/downloads/caption-cues-chrome.zip` and the site to `dist/site`.
 
-The finalized site build also generates `dist/site/service-worker.js` from a hash of its release contents. Its shell cache therefore changes with every content release; documents are network-first while versioned build assets are cache-first. Azure Static Web Apps policies are in `site/public/staticwebapp.config.json`: hashed assets are immutable, the worker is always revalidated, and CSP/Permissions-Policy are emitted by the host rather than as a served `_headers` file.
+To load the extension, open `chrome://extensions`. Turn on Developer mode,
+choose **Load unpacked**, and select `dist/extension`.
 
-To test the extension locally, open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select `dist/extension`. Open a page with browser-exposed captions, turn captions on, and open Caption Cues from the toolbar.
-
-After building, `npm run verify:extension` loads that exact unpacked output in Chromium and checks DOM-caption emphasis plus `Alt+R` replay. `npm run test:pwa-update` proves a controlled client updates from generated build A to build B and can load build B offline. `npm run verify:zip` checks the packaged Chrome ZIP; `npm run verify:release` runs the complete type, test, build, extension, PWA, and ZIP suite.
+The release-specific service worker uses network-first page requests and
+cache-first build assets. Hosting rules and security headers are in
+`site/public/staticwebapp.config.json`.
 
 ## Privacy and permissions
 
-Caption text and preferences stay in the browser. The extension requests page access so its content script can find caption tracks on the page, `storage` for preferences, and `activeTab` for popup status/replay. Network access is used only when a user voluntarily verifies a Supporter license against `api.sociobot.in`. There are no analytics, third-party fonts, or runtime CDNs.
+Caption text and settings stay in the browser. Page access lets the content
+script find exposed captions. The `storage` permission saves settings, and
+`activeTab` sends status and replay commands. The extension makes no external
+network requests. The site and extension contain no analytics, remote fonts,
+or remote runtime scripts.
 
-See [`site/privacy/index.html`](site/privacy/index.html) and [`site/terms/index.html`](site/terms/index.html).
+Read the [privacy policy](site/privacy/index.html) and
+[terms](site/terms/index.html).
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE).
+MIT — see [LICENSE](LICENSE).

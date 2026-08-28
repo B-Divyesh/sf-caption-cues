@@ -1,0 +1,15 @@
+# Caption Cues demo
+
+- URL: `https://caption-cues.sociobot.in/demo/`
+- Query entry: `https://caption-cues.sociobot.in/?demo=1`
+- Local URL after `npm run dev:site`: `http://localhost:5173/demo/`
+
+The sample is a three-line station scene. It includes speaker labels, names,
+sound cues, and the saved word “Gate.” Visitors can change all rules, text size,
+caption background, and the saved-word list. They can move between lines,
+replay with the button or `Alt+R`, and check the unsupported-player state.
+
+Demo state uses only the `demo:caption-cues:settings` localStorage key. Reset
+demo removes every key beginning with `demo:` and restores the seed. Start for
+real removes those keys before downloading the extension ZIP. Demo code never
+reads or writes the extension’s `chrome.storage` data or ordinary site keys.
