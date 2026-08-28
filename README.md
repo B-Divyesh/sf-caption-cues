@@ -11,7 +11,7 @@ isolated, works offline after one visit, and needs no account.
 
 ## What ships
 
-- A Chrome Manifest V3 extension.
+- A Chrome extension.
 - Controls for names, speaker labels, sound cues, saved words, text size, and caption background.
 - Support for standard browser caption tracks and selected caption text shown on the page.
 - Restoration of the page’s original caption state when the extension is disabled.

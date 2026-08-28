@@ -82,6 +82,47 @@ describe('registered public claims', () => {
       expect(parts.find((part) => part.kind === 'name')?.decoration).toContain('underline');
       expect(parts.find((part) => part.kind === 'sound')?.background).not.toBe('rgba(0, 0, 0, 0)');
     } finally { await context.close(); }
+
+    // The demo is useful for first use, but the product claim must also be
+    // observable in the shipped content script. Saving Gate in the real popup
+    // triggers the extension storage listener and re-renders this recognised
+    // caption surface from the packaged extension.
+    const fixture = await extensionFixture();
+    try {
+      await fixture.page.locator('.ytp-caption-segment').evaluate((node) => {
+        node.textContent = 'MARA: Rowan, wait at Thessaly Gate. [train approaching]';
+      });
+      await fixture.page.waitForSelector('.ytp-caption-segment .caption-cues-speaker[data-caption-cue="speaker"]');
+
+      const worker = fixture.context.serviceWorkers()[0] ?? await fixture.context.waitForEvent('serviceworker');
+      const extensionId = new URL(worker.url()).host;
+      const popup = await fixture.context.newPage();
+      try {
+        await popup.goto(`chrome-extension://${extensionId}/popup.html`);
+        await popup.locator('#word').fill('Gate');
+        await popup.getByRole('button', { name: 'Save word' }).click();
+        await fixture.page.waitForSelector('.ytp-caption-segment [data-caption-cue="manual"]');
+
+        const treatments = await fixture.page.locator('.ytp-caption-segment [data-caption-cue]').evaluateAll((nodes) => nodes.map((node) => {
+          const style = getComputedStyle(node);
+          return {
+            kind: (node as HTMLElement).dataset.captionCue,
+            text: node.textContent,
+            className: (node as HTMLElement).className,
+            background: style.backgroundColor,
+            decoration: style.textDecorationLine,
+            weight: style.fontWeight
+          };
+        }));
+
+        expect(treatments).toEqual(expect.arrayContaining([
+          expect.objectContaining({ kind: 'speaker', text: 'MARA', className: 'caption-cues-speaker', background: 'rgb(21, 70, 199)' }),
+          expect.objectContaining({ kind: 'name', text: 'Rowan', className: 'caption-cues-mark', decoration: 'underline' }),
+          expect.objectContaining({ kind: 'manual', text: 'Gate', className: 'caption-cues-mark', decoration: 'underline' }),
+          expect.objectContaining({ kind: 'sound', text: '[train approaching]', className: 'caption-cues-sound', background: 'rgb(196, 59, 18)' })
+        ]));
+      } finally { await popup.close(); }
+    } finally { await closeFixture(fixture); }
   });
 
   it('@claim:demo-isolation uses only demo-prefixed storage and clears it', async () => {

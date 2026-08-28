@@ -1,6 +1,6 @@
 # Caption Cues copy audit
 
-Audited 2026-08-28 for polish round 4. Every row below is visitor-facing copy
+Audited 2026-08-28 for polish round 5. Every row below is visitor-facing copy
 from the rendered landing page, demo, popup, README, or catalog sentence.
 Repeated wordmarks, icon glyphs, decorative arrows, and `aria-hidden` text are
 excluded. Counts use one tokenizer: whitespace-delimited words
@@ -81,7 +81,7 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | landing | 8 | Highlights selected words in captions you already use. |
 | landing | 1 | Terms |
 | landing | 1 | Source |
-| landing | 7 | Built by Param Factory · Build 1.0.4-r4 |
+| landing | 7 | Built by Param Factory · Build 1.0.5-r5 |
 | landing | 10 | Original proof-sheet artwork was generated with the factory image model. |
 | demo | 4 | Skip to main content |
 | demo | 7 | Demo — sample data, nothing is saved |
@@ -129,7 +129,7 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | demo | 11 | Waiting for exposed caption text. The hidden-caption sample was left unchanged. |
 | demo | 8 | Highlights selected words in captions you already use. |
 | demo | 1 | Terms |
-| demo | 7 | Built by Param Factory · Build 1.0.4-r4 |
+| demo | 7 | Built by Param Factory · Build 1.0.5-r5 |
 | demo | 10 | Original proof-sheet artwork was generated with the factory image model. |
 | popup | 2 | Caption controls |
 | popup | 2 | Caption Cues |
@@ -173,7 +173,7 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | README | 5 | Try it with sample data. |
 | README | 13 | The demo is isolated, works offline after one visit, and needs no account. |
 | README | 2 | What ships |
-| README | 5 | A Chrome Manifest V3 extension. |
+| README | 3 | A Chrome extension. |
 | README | 14 | Controls for names, speaker labels, sound cues, saved words, text size, and caption background. |
 | README | 14 | Support for standard browser caption tracks and selected caption text shown on the page. |
 | README | 12 | Restoration of the page’s original caption state when the extension is disabled. |

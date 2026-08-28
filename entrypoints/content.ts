@@ -65,6 +65,11 @@ export default defineContentScript({
           mark.className = page
             ? segment.kind === 'speaker' ? 'caption-cues-speaker' : segment.kind === 'sound' ? 'caption-cues-sound' : 'caption-cues-mark'
             : `cc-${segment.kind}`;
+          // Keep the cue type with the rendered mark. This is useful to
+          // assistive tooling and lets the packaged extension prove that a
+          // saved word was treated as a saved word rather than merely sharing
+          // the visual treatment used for names.
+          mark.dataset.captionCue = segment.kind;
           mark.textContent = segment.text;
           target.append(mark);
         }

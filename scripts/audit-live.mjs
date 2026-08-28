@@ -4,7 +4,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 const baseUrl = new URL(process.argv[2] ?? 'https://caption-cues.sociobot.in/');
-const evidenceDirectory = process.argv[3] ?? '.factory/evidence/polish-4-live-audit';
+const evidenceDirectory = process.argv[3] ?? '.factory/evidence/polish-5-live-audit';
 const expectedOrigin = baseUrl.origin;
 const browser = await chromium.launch({ channel: 'chromium' });
 const report = { baseUrl: expectedOrigin, routes: [], checks: {} };
@@ -38,7 +38,7 @@ try {
       assert.equal(state.h1, 1);
       assert.equal(state.main, 1);
       assert.equal(state.overflow, false, `${route} overflows at ${viewport.width}px`);
-      assert.equal(state.build, 'Built by Param Factory · Build 1.0.4-r4');
+      assert.equal(state.build, 'Built by Param Factory · Build 1.0.5-r5');
       if (route !== '/not-a-real-route') {
         assert.equal(await page.locator('link[rel="canonical"]').count(), 1);
         assert.equal(await page.locator('meta[property="og:image"]').getAttribute('content'), `${expectedOrigin}/social-preview.jpg`);

@@ -64,6 +64,12 @@ describe('reviewed public language', () => {
     expect(popup).not.toContain('>Add<');
   });
 
+  it('describes the browser extension without unexplained platform terminology', () => {
+    const readme = readFileSync('README.md', 'utf8');
+    expect(readme).toContain('- A Chrome extension.');
+    expect(readme).not.toContain('Manifest V3');
+  });
+
   it('recounts every audited visible string from its named source', () => {
     const audit = readFileSync('.factory/copy-audit.md', 'utf8');
     const source = {
