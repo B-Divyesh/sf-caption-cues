@@ -21,10 +21,11 @@ afterAll(async () => {
   if (siteServer) await closeServer(siteServer);
 });
 
-async function demoPage() {
+async function demoPage(entry = '/?demo=1') {
   const context = await browser.newContext();
   const page = await context.newPage();
-  await page.goto(`${siteUrl}/demo/`, { waitUntil: 'networkidle' });
+  await page.goto(`${siteUrl}${entry}`, { waitUntil: 'networkidle' });
+  await page.waitForURL('**/demo/?demo=1');
   return { context, page };
 }
 
@@ -80,8 +81,10 @@ describe('registered public claims', () => {
   });
 
   it('@claim:demo-isolation uses only demo-prefixed storage and clears it', async () => {
-    const { context, page } = await demoPage();
+    const { context, page } = await demoPage('/?demo=1&license=review-token');
     try {
+      expect(await page.getByText('Demo — sample data, nothing is saved').isVisible()).toBe(true);
+      expect(await page.evaluate(() => localStorage.getItem('sb_license:caption-cues'))).toBeNull();
       await page.evaluate(() => { localStorage.setItem('real:keep', 'untouched'); localStorage.setItem('sb_license:caption-cues', 'untouched'); });
       await page.getByLabel('Caption background').selectOption('ink');
       expect(await page.evaluate(() => Object.keys(localStorage))).toEqual(expect.arrayContaining(['demo:caption-cues:settings', 'real:keep', 'sb_license:caption-cues']));

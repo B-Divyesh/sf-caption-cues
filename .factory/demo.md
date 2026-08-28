@@ -1,7 +1,8 @@
 # Caption Cues demo
 
-- URL: `https://caption-cues.sociobot.in/demo/`
-- Query entry: `https://caption-cues.sociobot.in/?demo=1`
+- Primary URL: `https://caption-cues.sociobot.in/?demo=1`
+- The query entry redirects to `/demo/?demo=1`, where the demo banner and reset control remain visible.
+- Direct route: `https://caption-cues.sociobot.in/demo/`
 - Local URL after `npm run dev:site`: `http://localhost:5173/demo/`
 
 The sample is a three-line station scene. It includes speaker labels, names,

@@ -50,6 +50,10 @@ describe('built-site browser, accessibility, and route quality', () => {
       const sample = await page.getByRole('link', { name: /Try it with sample data/ }).boundingBox();
       expect(sample && sample.y + sample.height).toBeLessThanOrEqual(844);
       expect(await page.getByText('Downloads a ZIP for Chrome Developer mode.').isVisible()).toBe(true);
+      await page.getByRole('link', { name: /Try it with sample data/ }).click();
+      await page.waitForURL('**/demo/?demo=1');
+      expect(await page.getByText('Demo — sample data, nothing is saved').isVisible()).toBe(true);
+      expect(await page.getByRole('button', { name: 'Reset demo' }).isVisible()).toBe(true);
     } finally { await page.close(); }
   });
 

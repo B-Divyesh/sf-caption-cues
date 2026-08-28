@@ -11,7 +11,7 @@
     "claim": "Demo changes use a separate namespace and do not change ordinary site or extension data.",
     "where": "demo banner, privacy page, demo documentation",
     "test": "npm run test:claim -- @claim:demo-isolation",
-    "sandbox": "fresh demo context with sentinel ordinary keys; change and reset demo; assert sentinels remain"
+    "sandbox": "fresh ?demo=1&license=review-token context with sentinel ordinary keys; assert the banner, no license write, reset, and unchanged sentinels"
   },
   {
     "id": "site-offline",

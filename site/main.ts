@@ -2,7 +2,7 @@ import { parseCaption } from '../lib/caption-parser';
 import { DEFAULT_SETTINGS, type CaptionSettings } from '../lib/types';
 import './shared';
 
-if (new URLSearchParams(location.search).get('demo') === '1') location.replace('/demo/');
+if (new URLSearchParams(location.search).get('demo') === '1') location.replace('/demo/?demo=1');
 
 const sample = 'MARA: Tell Rowan to meet us at Thessaly Gate. [train approaching]';
 const preview = document.querySelector<HTMLElement>('#demo-caption');

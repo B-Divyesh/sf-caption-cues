@@ -15,6 +15,7 @@ let server: Server | undefined;
 async function makeRelease(directory: string, label: string) {
   await mkdir(directory, { recursive: true });
   await writeFile(resolve(directory, 'index.html'), `<!doctype html><title>${label}</title><h1>${label}</h1><script>navigator.serviceWorker.register('/service-worker.js')</script>`);
+  await writeFile(resolve(directory, 'late.txt'), `${label} delayed response`);
   await execFileAsync('node', [generator, directory]);
   return readFile(resolve(directory, 'service-worker.js'), 'utf8');
 }
@@ -34,6 +35,17 @@ async function serve(getRoot: () => string) {
     httpServer.listen(0, '127.0.0.1', () => accept());
   });
   return httpServer;
+}
+
+async function controllerVersion(page: import('playwright').Page) {
+  return page.evaluate(() => new Promise<string>((resolveVersion, reject) => {
+    const controller = navigator.serviceWorker.controller;
+    if (!controller) { reject(new Error('Page has no controlling service worker')); return; }
+    const channel = new MessageChannel();
+    const timeout = setTimeout(() => reject(new Error('Controller did not report its release cache')), 5_000);
+    channel.port1.onmessage = (event) => { clearTimeout(timeout); resolveVersion(String(event.data)); };
+    controller.postMessage('caption-cues:version', [channel.port2]);
+  }));
 }
 
 afterEach(async () => {
@@ -72,23 +84,39 @@ describe('generated service worker release updates', () => {
       await page.evaluate(() => navigator.serviceWorker.ready);
       await page.reload({ waitUntil: 'networkidle' });
       expect(await page.locator('h1').textContent()).toBe('Release A');
+      expect(await controllerVersion(page)).toBe(cacheA);
+      const controllerState = await page.evaluate(() => navigator.serviceWorker.controller?.state);
+      expect(controllerState).toBe('activated');
+      const knownRegressedCache = 'caption-cues-31b0e5257187d71b7be8';
+      await page.evaluate((cache) => caches.open(cache), knownRegressedCache);
 
       activeRelease = releaseB;
       await page.evaluate(async () => {
         const registration = await navigator.serviceWorker.getRegistration();
         if (!registration) throw new Error('service worker was not registered');
-        const changed = new Promise<void>((accept) => navigator.serviceWorker.addEventListener('controllerchange', () => accept(), { once: true }));
+        const changed = new Promise<void>((accept, reject) => {
+          const timeout = setTimeout(() => reject(new Error('build B did not take control')), 10_000);
+          navigator.serviceWorker.addEventListener('controllerchange', () => { clearTimeout(timeout); accept(); }, { once: true });
+        });
         await registration.update();
-        await Promise.race([changed, new Promise<void>((accept) => setTimeout(accept, 3000))]);
+        await changed;
       });
-      await expect.poll(() => page.evaluate(() => caches.keys())).toContain(cacheB);
-      await expect.poll(() => page.evaluate(() => caches.keys())).not.toContain(cacheA);
+      expect(await controllerVersion(page)).toBe(cacheB);
+      await expect.poll(() => page.evaluate(() => caches.keys()), { timeout: 10_000 }).toContain(cacheB);
+      await expect.poll(() => page.evaluate(() => caches.keys()), { timeout: 10_000 }).not.toContain(cacheA);
+      await expect.poll(() => page.evaluate(() => caches.keys()), { timeout: 10_000 }).not.toContain(knownRegressedCache);
+
+      expect(await page.evaluate(() => fetch('/late.txt').then((response) => response.text()))).toBe('Release B delayed response');
+      await expect.poll(() => page.evaluate(() => caches.keys()), { timeout: 10_000 }).toEqual([cacheB]);
       await page.reload({ waitUntil: 'networkidle' });
       expect(await page.locator('h1').textContent()).toBe('Release B');
+      expect(await controllerVersion(page)).toBe(cacheB);
 
       await context.setOffline(true);
       await page.reload({ waitUntil: 'domcontentloaded' });
       expect(await page.locator('h1').textContent()).toBe('Release B');
+      expect(await controllerVersion(page)).toBe(cacheB);
+      expect(await page.evaluate(() => caches.keys())).toEqual([cacheB]);
     } finally {
       await browser.close();
     }

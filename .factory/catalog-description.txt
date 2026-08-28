@@ -1,1 +1,1 @@
-Highlight names, speaker labels, sound cues, and saved words in captions you already use.
+Highlight easy-to-miss names, speaker labels, sound cues, and saved words in existing captions.

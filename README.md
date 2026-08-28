@@ -6,7 +6,7 @@ Caption Cues is for viewers who follow captions but miss key words. The Chrome
 extension changes caption styling without creating a new transcript. Press
 `Alt+R` to replay the last timed cue or reshow the latest visible caption.
 
-[Try it with sample data](https://caption-cues.sociobot.in/demo/). The demo is
+[Try it with sample data](https://caption-cues.sociobot.in/?demo=1). The demo is
 isolated, works offline after one visit, and needs no account.
 
 ## What ships
