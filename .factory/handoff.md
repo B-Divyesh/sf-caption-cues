@@ -1,3 +1,33 @@
+# Caption Cues review-2 handoff
+
+## Review-2 status
+
+Independent adversarial review completed on 2026-08-28 UTC without changing
+product code. The result is **FAIL** with one minor copy-consistency finding:
+`F-2-1` in `.factory/review-2.md`. The same supported visible caption source is
+called “selected caption text shown on the page” on landing, “selected visible
+caption elements” in README, and “selected visible page captions” in the claim.
+Unify that term before acceptance.
+
+Verification from a fresh clone at
+`/tmp/caption-cues-review-2.B15huO/repo`:
+
+- `npm ci` passed.
+- All 15 exact claim commands in `.factory/claims.json` passed independently.
+- `npm run test:claims` passed 15/15.
+- `npm test` passed.
+- Live cold browser checks at 390 × 844 and 1440 × 900 confirmed the audience,
+  job, and “Try it with sample data” action above the fold.
+- Live demo verified isolated `demo:` storage, reset, Alt+R replay, same-origin
+  requests, and live service-worker offline reload.
+- Live route/link/metadata/back-focus/Axe checks passed; the designed 404
+  returned HTTP 404.
+
+No earlier review-1 finding was reproduced. See `.factory/review-2.md` for the
+full evidence, copy inventory, and the concrete single-line fix.
+
+---
+
 # Caption Cues perfection-loop round 1 handoff
 
 ## Status
