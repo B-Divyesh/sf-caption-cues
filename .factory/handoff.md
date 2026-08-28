@@ -103,4 +103,22 @@ intentionally absent because the external Sociobot checkout is not registered.
 Reintroduce paid UI only after that endpoint is live and has its own checkout,
 merchant, restore, and license claim tests.
 
-Deployment verification is recorded below after the production upload.
+## Production deployment
+
+- Factory deploy command: `/opt/fleet/lib/deploy-static.sh caption-cues dist/site`
+- Azure Static Web Apps deployment ID:
+  `e421fe80-eb7c-4572-ade4-20460b2ae5fe`
+- Deployed product commit: `71ceec0`
+- Live URL: <https://caption-cues.sociobot.in/>
+- Live status: `/`, `/demo`, `/demo/`, `/privacy/`, `/terms/`, and the ZIP
+  return 200. `/not-a-real-route` returns the branded page with HTTP 404.
+- Live security headers include the self-only content security policy,
+  Permissions Policy, strict-origin referrer policy, and `nosniff`.
+- Factory URL verifier passed on live home and demo with zero console errors.
+- Live 390 × 844 Axe checks found zero serious or critical issues on home,
+  demo, both legal routes, and the branded 404.
+- Live `/?demo=1&license=review-token` entered `/demo/` and created only
+  `demo:caption-cues:settings`; no license key was written.
+- The primed live demo reloaded offline and advanced to line 2.
+- Live mobile Lighthouse scored 100 performance, 100 accessibility, 100 best
+  practices, and 100 SEO, with 1.2 s LCP, 0 CLS, and 0 ms total blocking time.
