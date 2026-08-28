@@ -202,10 +202,20 @@ export default defineContentScript({
       }
     });
 
-    browser.runtime.onMessage.addListener((message: unknown) => {
+    chrome.runtime.onMessage.addListener((message: unknown, _sender, sendResponse) => {
       const type = (message as { type?: string }).type;
-      if (type === 'REPLAY_LAST') return replayLast();
-      if (type === 'GET_STATUS') return { enabled: settings.enabled, detected, hasLastCue: Boolean(lastCue) };
+      if (type === 'REPLAY_LAST') {
+        void replayLast().then(sendResponse);
+        return true;
+      }
+      if (type === 'GET_STATUS') {
+        sendResponse({
+          enabled: settings.enabled,
+          detected,
+          hasLastCue: Boolean(lastCue),
+          sourceState: detected > 0 ? 'detected' : 'waiting'
+        });
+      }
     });
     browser.storage.onChanged.addListener((changes, area) => {
       if (area !== 'local' || !changes[SETTINGS_KEY]) return;

@@ -11,7 +11,7 @@
     <main>
       <header class="masthead">
         <span class="mark" aria-hidden="true">CC</span>
-        <div><p class="kicker">Live proof sheet</p><h1>Caption Cues</h1></div>
+        <div><p class="kicker">Caption controls</p><h1>Caption Cues</h1></div>
         <label class="master"><span class="sr-only">Enable Caption Cues</span><input id="enabled" type="checkbox" /><span aria-hidden="true"></span></label>
       </header>
 
@@ -27,7 +27,7 @@
 
       <section aria-labelledby="words-title">
         <h2 id="words-title">Saved words</h2>
-        <form id="word-form"><label for="word">Add a word or short phrase</label><div class="field-row"><input id="word" maxlength="40" autocomplete="off" /><button type="submit">Add</button></div></form>
+        <form id="word-form"><label for="word">Add a word or short phrase</label><div class="field-row"><input id="word" maxlength="40" autocomplete="off" /><button type="submit">Save word</button></div></form>
         <ul id="words" class="words" aria-label="Saved words"></ul>
         <p id="words-empty" class="empty">None yet. Try a character name or a place.</p>
       </section>
@@ -40,7 +40,7 @@
         <select id="theme"><option value="paper">Paper</option><option value="ink">Night ink</option></select>
       </section>
 
-      <button id="replay" class="primary" type="button">Replay last caption <kbd>Alt R</kbd></button>
+      <button id="replay" class="primary" type="button">Replay last caption <kbd>Alt+R</kbd></button>
 
       <p class="footnote">Runs locally. It reads only captions already exposed by this page. <a href="https://caption-cues.sociobot.in/privacy/" target="_blank">Privacy</a> · <a href="https://caption-cues.sociobot.in/terms/" target="_blank">Terms</a></p>
     </main>

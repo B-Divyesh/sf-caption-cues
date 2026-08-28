@@ -43,10 +43,10 @@
   },
   {
     "id": "hidden-caption-limit",
-    "claim": "Hidden or inaccessible captions stay unchanged and show a waiting state.",
+    "claim": "Hidden or inaccessible captions stay unchanged, and the popup shows a waiting state.",
     "where": "landing limitation, demo compatibility check, README",
     "test": "npm run test:claim -- @claim:hidden-caption-limit",
-    "sandbox": "fresh demo context; run unsupported fixture; assert content is unchanged and waiting status appears"
+    "sandbox": "fresh extension profile; load an unrecognised caption surface; assert exact unchanged content and the popup waiting status"
   },
   {
     "id": "no-media-capture",

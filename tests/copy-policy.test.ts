@@ -38,7 +38,7 @@ describe('reviewed public language', () => {
     const claims = readFileSync('.factory/claims.json', 'utf8');
     const audit = readFileSync('.factory/copy-audit.md', 'utf8');
     for (const source of [home, readme, privacy, claims, audit]) expect(source).toContain(phrase);
-    expect(audit).toContain('| 14 | Support for standard browser caption tracks and selected caption text shown on the page. |');
+    expect(audit).toContain('| README | 14 | Support for standard browser caption tracks and selected caption text shown on the page. |');
     for (const variant of ['selected visible caption elements', 'selected visible page captions', 'selected visible caption text exposed by the page']) {
       expect(publicCopy + claims + audit).not.toContain(variant);
     }
@@ -48,7 +48,7 @@ describe('reviewed public language', () => {
     const audit = readFileSync('.factory/copy-audit.md', 'utf8');
     for (const sentence of [
       'A caption highlighter for Chrome',
-      'Highlight the caption words you miss.',
+      'Highlight the caption words you miss',
       'For viewers who follow captions but miss names, speaker labels, or sound cues.',
       'Try it with sample data',
       'See highlighted captions before you install.',
@@ -56,10 +56,46 @@ describe('reviewed public language', () => {
     ]) expect(audit).toContain(sentence);
   });
 
+  it('uses plain language for the extension popup controls and saved-word action', () => {
+    const popup = readFileSync('entrypoints/popup/index.html', 'utf8');
+    expect(popup).toContain('>Caption controls<');
+    expect(popup).toContain('>Save word<');
+    expect(popup).not.toContain('Live proof sheet');
+    expect(popup).not.toContain('>Add<');
+  });
+
+  it('recounts every audited visible string from its named source', () => {
+    const audit = readFileSync('.factory/copy-audit.md', 'utf8');
+    const source = {
+      landing: `${readFileSync('site/index.html', 'utf8')}\n${readFileSync('site/main.ts', 'utf8')}`,
+      demo: `${readFileSync('site/demo/index.html', 'utf8')}\n${readFileSync('site/demo.ts', 'utf8')}`,
+      popup: `${readFileSync('entrypoints/popup/index.html', 'utf8')}\n${readFileSync('entrypoints/popup/main.ts', 'utf8')}`,
+      README: readFileSync('README.md', 'utf8'),
+      catalog: readFileSync('.factory/catalog-description.txt', 'utf8')
+    };
+    const normalise = (value: string) => value
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/[\`*_]/g, '')
+      .replace(/Alt\s*\+\s*R/g, 'Alt+R')
+      .replace(/\s+/g, ' ')
+      .replace(/\s+([.,;:!?])/g, '$1')
+      .trim();
+    const rows = Array.from(audit.matchAll(/^\| (landing|demo|popup|README|catalog) \| (\d+) \| (.+) \|$/gm));
+
+    expect(rows.length).toBeGreaterThan(150);
+    for (const row of rows) {
+      const [, sourceName, expectedWords, copy] = row;
+      if (!sourceName || !expectedWords || !copy) throw new Error('Malformed copy-audit row');
+      expect(copy.trim().split(/\s+/).filter(Boolean).length, copy).toBe(Number(expectedWords));
+      expect(normalise(source[sourceName as keyof typeof source]), copy).toContain(normalise(copy));
+    }
+  });
+
   it('ships a verb-first catalog sentence within 120 characters', () => {
     const description = readFileSync('.factory/catalog-description.txt', 'utf8').trim();
     expect(description.length).toBeLessThanOrEqual(120);
     expect(description).toMatch(/^Highlight\b/);
-    expect(description).toBe('Highlight missed names, speaker labels, sound cues, and saved words in captions shown on the page.');
+    expect(description).toBe('Highlight names, speaker labels, sound cues, and saved words in captions already shown by a page.');
   });
 });

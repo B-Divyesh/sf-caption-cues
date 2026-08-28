@@ -35,7 +35,13 @@ function render() {
 async function persist() { await saveSettings(settings); render(); }
 
 async function currentTabMessage(message: unknown) {
-  const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+  let [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+  // A browser-action popup normally has the video tab active. Falling back to
+  // that tab also keeps this control page useful when it is opened directly.
+  if (!tab?.url || tab.url.startsWith('chrome-extension://')) {
+    const tabs = await browser.tabs.query({});
+    tab = tabs.find((candidate) => candidate.id && /^https?:/.test(candidate.url ?? '')) ?? tab;
+  }
   if (!tab?.id) throw new Error('No active tab');
   return browser.tabs.sendMessage(tab.id, message);
 }
@@ -76,8 +82,12 @@ async function init() {
   settings = await getSettings();
   render();
   try {
-    const result = await currentTabMessage({ type: 'GET_STATUS' }) as { enabled: boolean; detected: number; hasLastCue: boolean };
-    status.textContent = result.hasLastCue ? 'Caption detected. Your cues are active.' : 'Ready. Start captions on this page.';
+    const result = await currentTabMessage({ type: 'GET_STATUS' }) as {
+      enabled: boolean; detected: number; hasLastCue: boolean; sourceState?: 'detected' | 'waiting';
+    };
+    if (!result.enabled) status.textContent = 'Caption Cues is paused. Turn it on to look for captions.';
+    else if (result.hasLastCue || result.sourceState === 'detected') status.textContent = 'Caption detected. Your cues are active.';
+    else status.textContent = 'Waiting for exposed caption text. Start captions; some players cannot expose it.';
   } catch { status.textContent = 'This browser page does not allow extensions. Try a video tab.'; }
 }
 

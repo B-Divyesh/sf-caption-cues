@@ -29,21 +29,25 @@ async function demoPage(entry = '/?demo=1') {
   return { context, page };
 }
 
-async function extensionFixture(): Promise<{ context: BrowserContext; page: Page; server: Server; profile: string; requests: string[] }> {
-  const fixture = `<!doctype html><html><body>
-    <div class="ytp-caption-segment">MARA: Rowan heard [thunder] at River Gate.</div>
-    <div id="pixel-caption">Hidden pixels: unchanged</div>
-    <script>
-      const video = document.createElement('video');
-      const track = video.addTextTrack('captions', 'English', 'en');
-      const cue = new VTTCue(0, 10, 'NORA: Mina waits at Orkney. [bell rings]');
-      track.addCue(cue);
-      Object.defineProperty(track, 'activeCues', { configurable: true, get: () => [cue] });
-      track.mode = 'showing';
-      document.body.append(video);
-      setTimeout(() => track.dispatchEvent(new Event('cuechange')), 800);
-    </script>
-  </body></html>`;
+async function extensionFixture(options: { surface?: 'supported' | 'unsupported' } = {}): Promise<{ context: BrowserContext; page: Page; server: Server; profile: string; requests: string[] }> {
+  const fixture = options.surface === 'unsupported'
+    ? `<!doctype html><html><body>
+      <div id="unsupported-caption" class="painted-subtitle">MARA: Rowan heard [thunder] at River Gate.</div>
+    </body></html>`
+    : `<!doctype html><html><body>
+      <div class="ytp-caption-segment">MARA: Rowan heard [thunder] at River Gate.</div>
+      <div id="pixel-caption">Hidden pixels: unchanged</div>
+      <script>
+        const video = document.createElement('video');
+        const track = video.addTextTrack('captions', 'English', 'en');
+        const cue = new VTTCue(0, 10, 'NORA: Mina waits at Orkney. [bell rings]');
+        track.addCue(cue);
+        Object.defineProperty(track, 'activeCues', { configurable: true, get: () => [cue] });
+        track.mode = 'showing';
+        document.body.append(video);
+        setTimeout(() => track.dispatchEvent(new Event('cuechange')), 800);
+      </script>
+    </body></html>`;
   const server = createServer((_request, response) => response.writeHead(200, { 'Content-Type': 'text/html' }).end(fixture));
   await new Promise<void>((accept, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', accept); });
   const address = server.address();
@@ -140,7 +144,7 @@ describe('registered public claims', () => {
         await popup.locator(`#${id}`).check();
       }
       await popup.locator('#word').fill('Thessaly');
-      await popup.getByRole('button', { name: 'Add' }).click();
+      await popup.getByRole('button', { name: 'Save word' }).click();
       await popup.locator('#size').selectOption('30');
       await popup.locator('#theme').selectOption('ink');
       await expect.poll(() => worker.evaluate(() => chrome.storage.local.get('captionCuesSettings'))).toMatchObject({ captionCuesSettings: { captionSize: 30, theme: 'ink', manualWords: ['Thessaly'] } });
@@ -168,16 +172,34 @@ describe('registered public claims', () => {
     } finally { await closeFixture(fixture); }
   }, 30_000);
 
-  it('@claim:hidden-caption-limit leaves inaccessible captions unchanged and reports waiting', async () => {
-    const { context, page } = await demoPage();
+  it('@claim:hidden-caption-limit leaves an unsupported extension surface unchanged and reports waiting in the popup', async () => {
+    const fixture = await extensionFixture({ surface: 'unsupported' });
     try {
-      const before = await page.getByRole('heading', { name: 'Hidden captions stay unchanged' }).textContent();
-      await page.getByRole('button', { name: 'Check hidden-caption sample' }).click();
-      expect(await page.locator('#unsupported-output').textContent()).toContain('left unchanged');
-      expect(await page.getByRole('heading', { name: 'Hidden captions stay unchanged' }).textContent()).toBe(before);
-      expect(await page.locator('#unsupported-output').textContent()).toContain('Waiting for exposed caption text');
-    } finally { await context.close(); }
-  });
+      await fixture.page.waitForSelector('#caption-cues-overlay', { state: 'attached' });
+      expect(await fixture.page.locator('#unsupported-caption').evaluate((node) => ({
+        text: node.textContent,
+        html: node.innerHTML,
+        className: (node as HTMLElement).className,
+        enhancedSource: (node as HTMLElement).dataset.captionCuesSource ?? null,
+        ariaLabel: node.getAttribute('aria-label')
+      }))).toEqual({
+        text: 'MARA: Rowan heard [thunder] at River Gate.',
+        html: 'MARA: Rowan heard [thunder] at River Gate.',
+        className: 'painted-subtitle',
+        enhancedSource: null,
+        ariaLabel: null
+      });
+      expect(await fixture.page.locator('#unsupported-caption .caption-cues-mark, #unsupported-caption .caption-cues-speaker, #unsupported-caption .caption-cues-sound').count()).toBe(0);
+
+      const worker = fixture.context.serviceWorkers()[0] ?? await fixture.context.waitForEvent('serviceworker');
+      const extensionId = new URL(worker.url()).host;
+      const popup = await fixture.context.newPage();
+      try {
+        await popup.goto(`chrome-extension://${extensionId}/popup.html`);
+        await expect.poll(() => popup.locator('#status').textContent()).toBe('Waiting for exposed caption text. Start captions; some players cannot expose it.');
+      } finally { await popup.close(); }
+    } finally { await closeFixture(fixture); }
+  }, 30_000);
 
   it('@claim:no-media-capture performs caption and replay flows without media or transcript requests', async () => {
     const fixture = await extensionFixture();
