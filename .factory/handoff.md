@@ -1,55 +1,63 @@
-# Caption Cues verification handoff
+# Caption Cues review 1 handoff
 
-## Status: PASS
+## Status: FAIL
 
-Independent verification on 2026-08-27 UTC passed for candidate
-`f418b0fa9e269aa28f10025214b6a82414a7073d` at
-<https://caption-cues.sociobot.in/>. No product code was changed during QA.
+Adversarial first-read review 1 was completed on 2026-08-28 UTC against live
+production and repository commit `ae14a02a370696394d9c2b352dd5848b8db8d1a8`.
+No product code was changed. The detailed report is
+[`review-1.md`](review-1.md).
 
-## What was verified
+## What was done
 
-- Clean `npm ci`, isolated-cache `npm run check:clean-browser`, documented
-  `npm run setup:browser`, and complete `npm run verify:release` all passed.
-  The latter covers TypeScript, 13 tests, the exact production build, unpacked
-  MV3 smoke, service-worker update/offline test, and packaged ZIP integrity.
-- The candidate build is deployed: local/live SHA-256 values match for the
-  document, JS, CSS, service worker, and extension download. The ZIP hash is
-  `859c81e52a556fd60a44769521e3173f273e262e212b873875eb195ebb190ae4`.
-- Live desktop and 390 px mobile browser checks had no console/page errors,
-  zero serious/critical axe findings, visible keyboard focus, no horizontal
-  overflow, and reduced-motion support. The live service worker controlled an
-  offline reload. Lighthouse mobile scores were 100 performance, accessibility,
-  best practices, and SEO.
-- The actual built extension emphasized a representative speaker/name/sound
-  caption, replayed it with `Alt+R`, safely handled blank/duplicate saved words,
-  applied rule changes, and restored the original caption when disabled.
-- First-load network traffic was same-origin only. No analytics, third-party
-  fonts/scripts, trackers, caption uploads, media downloads, or DRM bypasses
-  were found. Optional license verification is user initiated and limited to
-  Sociobot's documented API.
-- Live cache/security policy is active: immutable hashed assets, `no-cache`
-  service worker, HSTS, CSP, Permissions-Policy, `nosniff`, and strict referrer
-  policy. The previously reported deployment-cache/header failure is resolved.
+- Opened the live site cold in fresh Chromium contexts at 390 × 844 and
+  1440 × 900 and recorded the first-screen interpretation before scrolling.
+- Audited every landing-page/static UI sentence, dynamic status string, README
+  sentence, heading, and action for word count and plain-language issues.
+- Exercised the preview, `/demo`, `?demo=1`, reset/start controls, storage
+  isolation, offline reload, and extension offline replay with request
+  interception.
+- Checked the absent claims registry and claim tags, then ran the full existing
+  release suite from a clean clone as fallback evidence.
+- Checked route metadata, 404 behavior, deep links, back/focus behavior,
+  header/footer consistency, all discovered links, mobile target sizes,
+  console errors, axe results, and the visual system.
 
-## How to verify again
+## Verification commands
+
+From a clean clone:
 
 ```sh
 npm ci
-npm run check:clean-browser
-# or, after browser provisioning:
 npm run setup:browser
 npm run verify:release
 ```
 
-Load `dist/extension` unpacked in Chromium to test the extension, or inspect
-the production static site in `dist/site`. See
-[`verification-3.md`](verification-3.md) for commands, metrics, exact hashes,
-and the complete test evidence.
+The release suite passed: TypeScript, 13 Vitest tests, production build,
+unpacked extension smoke, service-worker offline update, and ZIP integrity.
+Fresh live browser checks found zero axe violations and no cold-load console
+errors. Custom network interception confirmed same-origin-only landing traffic
+and no outbound traffic during a local built-extension caption/save/replay
+flow.
 
-## Known gaps / next steps
+## Blocking gaps
 
-No release-blocking defects were found. The researched 20-minute participant
-outcome (30% fewer replay requests) remains a product-research measurement,
-not something automated QA can establish. Browser-inaccessible/pixel-burned
-or DRM-hidden captions remain intentionally unsupported, consistent with the
-product boundary.
+1. The first screen does not name the intended viewer; the sample action is
+   clipped below the mobile fold and is not the primary action.
+2. There is no isolated one-click demo, demo banner, reset, start-real control,
+   demo storage namespace, `.factory/demo.md`, or working `/demo` route.
+3. `.factory/claims.json` and all `@claim:*` tests are absent despite many
+   public claims.
+4. Unknown routes use Azure's generic 404 rather than a designed product route.
+5. “Buy Supporter — $9” returns HTTP 404.
+
+Other material gaps are missing canonical/social/apple metadata, inconsistent
+legal-page chrome, absent route focus/announcement behavior, undersized link
+targets, an unreadable double-circle wordmark caused by a global CSS selector,
+and a developer-ZIP install path that is disclosed too late.
+
+## Next step
+
+Resolve the five blockers, add the claim registry and clean-demo tests, then
+repeat this review from fresh browser contexts. Do not treat the passing
+release suite as claim coverage until each visitor-facing promise has exactly
+one tagged sandbox test.
