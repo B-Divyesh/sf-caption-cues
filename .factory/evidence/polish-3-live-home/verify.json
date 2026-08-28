@@ -1,0 +1,14 @@
+{
+  "url": "https://caption-cues.sociobot.in/",
+  "loadMs": 684,
+  "errors": [],
+  "a11y": {
+    "title": "Caption Cues — highlight easy-to-miss caption words",
+    "lang": "en",
+    "h1": 1,
+    "main": true,
+    "imgsMissingAlt": 0,
+    "buttonsUnlabeled": 0,
+    "textLength": 2072
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "baseUrl": "https://caption-cues.sociobot.in",
+  "routes": [
+    {
+      "route": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "title": "Caption Cues — highlight easy-to-miss caption words",
+      "seriousAxeFindings": 0
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "title": "Caption Cues — highlight easy-to-miss caption words",
+      "seriousAxeFindings": 0
+    },
+    {
+      "route": "/demo/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "title": "Demo — Caption Cues",
+      "seriousAxeFindings": 0
+    },
+    {
+      "route": "/demo/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "title": "Demo — Caption Cues",
+      "seriousAxeFindings": 0
+    },
+    {
+      "route": "/privacy/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "title": "Privacy — Caption Cues",
+      "seriousAxeFindings": 0
+    },
+    {
+      "route": "/privacy/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "title": "Privacy — Caption Cues",
+      "seriousAxeFindings": 0
+    },
+    {
+      "route": "/terms/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "title": "Terms — Caption Cues",
+      "seriousAxeFindings": 0
+    },
+    {
+      "route": "/terms/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "title": "Terms — Caption Cues",
+      "seriousAxeFindings": 0
+    },
+    {
+      "route": "/not-a-real-route",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 404,
+      "title": "404 — Caption Cues",
+      "seriousAxeFindings": 0
+    },
+    {
+      "route": "/not-a-real-route",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 404,
+      "title": "404 — Caption Cues",
+      "seriousAxeFindings": 0
+    }
+  ],
+  "checks": {
+    "firstScreenAndFocus": "pass",
+    "demoIsolation": "pass",
+    "sameOriginDemoRequests": 32,
+    "offlineDemo": "pass",
+    "review2Terminology": "pass"
+  }
+}
