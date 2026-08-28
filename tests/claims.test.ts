@@ -217,7 +217,10 @@ describe('registered public claims', () => {
   it('@claim:package-output produces the site, unpacked extension, and installable ZIP', async () => {
     expect((await stat('dist/site/index.html')).isFile()).toBe(true);
     expect((await stat('dist/site/demo/index.html')).isFile()).toBe(true);
+    expect((await stat('dist/site/privacy/index.html')).isFile()).toBe(true);
+    expect((await stat('dist/site/terms/index.html')).isFile()).toBe(true);
     expect((await stat('dist/extension/manifest.json')).isFile()).toBe(true);
+    expect(JSON.parse(await readFile('dist/extension/manifest.json', 'utf8')).manifest_version).toBe(3);
     expect((await stat('dist/site/downloads/caption-cues-chrome.zip')).size).toBeGreaterThan(10_000);
   });
 
@@ -259,8 +262,4 @@ describe('registered public claims', () => {
     expect(image.size).toBeGreaterThan(50_000);
   });
 
-  it('@claim:node-runtime declares and runs on the documented Node baseline', () => {
-    const major = Number(process.versions.node.split('.')[0]);
-    expect(major).toBeGreaterThanOrEqual(20);
-  });
 });

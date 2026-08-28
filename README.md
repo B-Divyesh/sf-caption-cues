@@ -11,12 +11,12 @@ isolated, works offline after one visit, and needs no account.
 
 ## What ships
 
-- A Chrome Manifest V3 extension built with Web Extension Toolkit and TypeScript.
+- A Chrome Manifest V3 extension.
 - Controls for names, speaker labels, sound cues, saved words, text size, and caption background.
 - Support for standard browser caption tracks and selected visible caption elements.
 - Restoration of the page’s original caption state when the extension is disabled.
 - Keyboard and popup controls for replaying the last caption.
-- A responsive product site, isolated demo, offline shell, legal pages, and extension ZIP.
+- A static product site, isolated demo, legal pages, and extension ZIP.
 
 Caption Cues cannot change captions hidden in video pixels or inaccessible
 closed components. It does not capture audio, download video, or bypass a
@@ -24,27 +24,19 @@ protected player.
 
 ## Run and test
 
-Use Node.js 20 or newer.
-
 ```sh
 npm ci
 npm run setup:browser
 npm run check
 ```
 
-The browser tests use Playwright 1.58.2 from the lockfile. Run
-`npm run setup:browser` after `npm ci` or after clearing its browser cache. On
-Ubuntu CI, use `npm run setup:browser:ci` to add Chromium system libraries.
+On Ubuntu CI, use `npm run setup:browser:ci`.
 
-Run the release gate with a new browser cache:
+Optional CI command:
 
 ```sh
 npm run check:clean-browser
 ```
-
-This command installs the pinned Chromium build. It stops if the install fails.
-It then runs type checks, tests, the production build, extension browser checks,
-the offline update check, accessibility checks, and ZIP validation.
 
 Every public claim appears in [`.factory/claims.json`](.factory/claims.json).
 Run one claim with the exact command in that file. Run them all with:
@@ -59,8 +51,8 @@ npm run test:claims
 npm run build:site
 ```
 
-The build writes the unpacked extension to `dist/extension`. It writes the ZIP
-to `dist/site/downloads/caption-cues-chrome.zip` and the site to `dist/site`.
+Build output is in `dist/extension` and `dist/site`. The Chrome ZIP is in
+`dist/site/downloads/caption-cues-chrome.zip`.
 
 To load the extension, open `chrome://extensions`. Turn on Developer mode,
 choose **Load unpacked**, and select `dist/extension`.

@@ -71,7 +71,7 @@
   },
   {
     "id": "package-output",
-    "claim": "The build produces a static site, unpacked extension, and Chrome ZIP.",
+    "claim": "The build produces legal and demo pages, a Manifest V3 extension, and a Chrome ZIP.",
     "where": "README",
     "test": "npm run test:claim -- @claim:package-output",
     "sandbox": "clean build; assert every documented artifact exists and the ZIP is non-empty"
@@ -103,12 +103,5 @@
     "where": "site footer, design documentation",
     "test": "npm run test:claim -- @claim:generated-art",
     "sandbox": "clean checkout; compare source SHA-256 with provenance metadata and assert the derived social image ships"
-  },
-  {
-    "id": "node-runtime",
-    "claim": "Development uses Node.js 20 or newer.",
-    "where": "README",
-    "test": "npm run test:claim -- @claim:node-runtime",
-    "sandbox": "test process; assert the running Node major version meets the documented baseline"
   }
 ]
