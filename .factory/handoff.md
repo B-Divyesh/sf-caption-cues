@@ -1,4 +1,18 @@
-# Caption Cues perfection-loop round 2 handoff
+# Review 3 handoff — Caption Cues
+
+## Current status
+
+FAIL. No product code was changed. `review-3.md` found F-3-1: the committed
+copy audit retains “selected visible caption elements”, so review-2 F-2-1 is
+not fully repaired. Update that row to “selected caption text shown on the
+page”, correct its count, and rerun the terminology/copy check.
+
+Fresh phone/desktop first reads, demo isolation/reset/offline, all 15 exact
+claim commands from clean clone `/tmp/caption-cues-review-3.8lvXM9/repo`,
+`npm run test:claims` (15/15), `npm test`, and `npm run verify:live` passed.
+See `.factory/review-3.md` for the full evidence.
+
+## Previous round handoff
 
 ## Status
 
