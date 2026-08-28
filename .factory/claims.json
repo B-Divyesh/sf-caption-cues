@@ -2,7 +2,7 @@
   {
     "id": "caption-emphasis",
     "claim": "Highlights names, speaker labels, sound cues, and saved words.",
-    "where": "landing page, demo, extension popup, README",
+    "where": "catalog, landing page, demo, extension popup, README",
     "test": "npm run test:claim -- @claim:caption-emphasis",
     "sandbox": "fresh demo context; assert each sample fragment has its intended visible treatment"
   },
@@ -32,7 +32,7 @@
     "claim": "Alt+R and the replay control replay the last caption line.",
     "where": "landing preview, how-it-works section, demo, extension popup, README",
     "test": "npm run test:claim -- @claim:replay-last-line",
-    "sandbox": "fresh demo context; replay two lines by keyboard and button; assert announced line numbers"
+    "sandbox": "fresh demo plus two fresh packaged-extension profiles; assert demo replay, Alt+R seeks a browser TextTrack to its cue start, and the real popup reshows the exact page-caption line in a polite live status"
   },
   {
     "id": "caption-text-page-makes-available",

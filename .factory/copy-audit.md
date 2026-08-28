@@ -1,6 +1,6 @@
 # Caption Cues copy audit
 
-Audited 2026-08-28 for polish round 6. Every row below is visitor-facing copy
+Audited 2026-08-28 for polish round 7. Every row below is visitor-facing copy
 from the rendered landing page, demo, popup, README, or catalog sentence.
 Repeated wordmarks, icon glyphs, decorative arrows, and `aria-hidden` text are
 excluded. Counts use one tokenizer: whitespace-delimited words
@@ -83,7 +83,7 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | landing | 8 | Highlights selected words in captions you already use. |
 | landing | 1 | Terms |
 | landing | 1 | Source |
-| landing | 7 | Built by Param Factory · Build 1.0.6-r6 |
+| landing | 7 | Built by Param Factory · Build 1.0.7-r7 |
 | landing | 10 | Original proof-sheet artwork was generated with the factory image model. |
 | demo | 4 | Skip to main content |
 | demo | 7 | Demo — sample data, nothing is saved |
@@ -131,7 +131,7 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | demo | 12 | Waiting for caption text the page makes available. The sample stayed unchanged. |
 | demo | 8 | Highlights selected words in captions you already use. |
 | demo | 1 | Terms |
-| demo | 7 | Built by Param Factory · Build 1.0.6-r6 |
+| demo | 7 | Built by Param Factory · Build 1.0.7-r7 |
 | demo | 10 | Original proof-sheet artwork was generated with the factory image model. |
 | popup | 2 | Caption controls |
 | popup | 2 | Caption Cues |

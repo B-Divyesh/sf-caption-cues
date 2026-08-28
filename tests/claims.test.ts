@@ -29,12 +29,30 @@ async function demoPage(entry = '/?demo=1') {
   return { context, page };
 }
 
-async function extensionFixture(options: { surface?: 'supported' | 'unsupported' } = {}): Promise<{ context: BrowserContext; page: Page; server: Server; profile: string; requests: string[] }> {
-  const fixture = options.surface === 'unsupported'
-    ? `<!doctype html><html><body>
+type ExtensionSurface = 'supported' | 'unsupported' | 'page-caption' | 'timed-track';
+
+async function extensionFixture(options: { surface?: ExtensionSurface } = {}): Promise<{ context: BrowserContext; page: Page; server: Server; profile: string; requests: string[] }> {
+  const fixtures: Record<ExtensionSurface, string> = {
+    unsupported: `<!doctype html><html><body>
       <div id="unsupported-caption" class="painted-subtitle">MARA: Rowan heard [thunder] at River Gate.</div>
-    </body></html>`
-    : `<!doctype html><html><body>
+    </body></html>`,
+    'page-caption': `<!doctype html><html><body>
+      <div class="ytp-caption-segment">MARA: Rowan heard [thunder] at River Gate.</div>
+    </body></html>`,
+    'timed-track': `<!doctype html><html><body>
+      <video id="timed-video"></video>
+      <script>
+        const video = document.querySelector('#timed-video');
+        video.currentTime = 11;
+        const track = video.addTextTrack('captions', 'English', 'en');
+        const cue = new VTTCue(5.25, 14, 'NORA: Mina waits at Orkney. [bell rings]');
+        track.addCue(cue);
+        Object.defineProperty(track, 'activeCues', { configurable: true, get: () => [cue] });
+        track.mode = 'showing';
+        setTimeout(() => track.dispatchEvent(new Event('cuechange')), 800);
+      </script>
+    </body></html>`,
+    supported: `<!doctype html><html><body>
       <div class="ytp-caption-segment">MARA: Rowan heard [thunder] at River Gate.</div>
       <div id="pixel-caption">Hidden pixels: unchanged</div>
       <script>
@@ -47,7 +65,9 @@ async function extensionFixture(options: { surface?: 'supported' | 'unsupported'
         document.body.append(video);
         setTimeout(() => track.dispatchEvent(new Event('cuechange')), 800);
       </script>
-    </body></html>`;
+    </body></html>`
+  };
+  const fixture = fixtures[options.surface ?? 'supported'];
   const server = createServer((_request, response) => response.writeHead(200, { 'Content-Type': 'text/html' }).end(fixture));
   await new Promise<void>((accept, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', accept); });
   const address = server.address();
@@ -192,7 +212,7 @@ describe('registered public claims', () => {
     } finally { await closeFixture(fixture); }
   }, 15_000);
 
-  it('@claim:replay-last-line replays by keyboard and by button', async () => {
+  it('@claim:replay-last-line replays the demo and both packaged-extension caption paths', async () => {
     const { context, page } = await demoPage();
     try {
       await page.keyboard.press('Alt+R');
@@ -201,7 +221,38 @@ describe('registered public claims', () => {
       await page.getByRole('button', { name: /Replay last line/ }).click();
       expect(await page.locator('#demo-status').textContent()).toBe('Replayed caption line 2.');
     } finally { await context.close(); }
-  });
+
+    const timedFixture = await extensionFixture({ surface: 'timed-track' });
+    try {
+      await timedFixture.page.waitForFunction(() => document.querySelector('#caption-cues-overlay')?.shadowRoot?.querySelector('.line')?.textContent?.includes('Orkney'));
+      expect(await timedFixture.page.locator('#timed-video').evaluate((video) => (video as HTMLVideoElement).currentTime)).toBe(11);
+      await timedFixture.page.keyboard.press('Alt+R');
+      await expect.poll(() => timedFixture.page.locator('#timed-video').evaluate((video) => (video as HTMLVideoElement).currentTime)).toBeCloseTo(5.05, 5);
+    } finally { await closeFixture(timedFixture); }
+
+    const pageCaptionFixture = await extensionFixture({ surface: 'page-caption' });
+    try {
+      const exactLine = 'MARA: Rowan heard [thunder] at River Gate.';
+      await pageCaptionFixture.page.waitForSelector('.ytp-caption-segment .caption-cues-speaker');
+      const worker = pageCaptionFixture.context.serviceWorkers()[0] ?? await pageCaptionFixture.context.waitForEvent('serviceworker');
+      const extensionId = new URL(worker.url()).host;
+      const popup = await pageCaptionFixture.context.newPage();
+      try {
+        await popup.goto(`chrome-extension://${extensionId}/popup.html`);
+        await popup.getByRole('button', { name: /Replay last caption/ }).click();
+        await expect.poll(() => popup.locator('#status').textContent()).toBe('Replaying the last caption.');
+        await expect.poll(() => pageCaptionFixture.page.evaluate(() => {
+          const line = document.querySelector('#caption-cues-overlay')?.shadowRoot?.querySelector('.line');
+          return line ? {
+            text: line.textContent,
+            role: line.getAttribute('role'),
+            live: line.getAttribute('aria-live'),
+            atomic: line.getAttribute('aria-atomic')
+          } : null;
+        })).toEqual({ text: exactLine, role: 'status', live: 'polite', atomic: 'true' });
+      } finally { await popup.close(); }
+    } finally { await closeFixture(pageCaptionFixture); }
+  }, 45_000);
 
   it('@claim:caption-text-page-makes-available enhances caption text the page makes available and browser caption tracks', async () => {
     const fixture = await extensionFixture();

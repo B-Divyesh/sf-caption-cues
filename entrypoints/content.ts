@@ -41,7 +41,7 @@ export default defineContentScript({
       .notice{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#171612;color:#fff9ed;padding:8px 12px;font:700 14px Arial,sans-serif}
       @keyframes cc-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
       @media(prefers-reduced-motion:reduce){.line{animation:none}}
-    </style><div class="wrap"><div class="line" role="region" aria-label="Enhanced captions"></div></div><div class="notice" role="status" aria-live="polite" hidden></div>`;
+    </style><div class="wrap"><div class="line" role="status" aria-live="polite" aria-atomic="true"></div></div><div class="notice" role="status" aria-live="polite" hidden></div>`;
     const wrap = shadow.querySelector<HTMLElement>('.wrap')!;
     const line = shadow.querySelector<HTMLElement>('.line')!;
     const notice = shadow.querySelector<HTMLElement>('.notice')!;
