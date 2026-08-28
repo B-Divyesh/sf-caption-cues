@@ -38,7 +38,7 @@ try {
       assert.equal(state.h1, 1);
       assert.equal(state.main, 1);
       assert.equal(state.overflow, false, `${route} overflows at ${viewport.width}px`);
-      assert.equal(state.build, 'Built by Param Factory · Build 1.0.5-r5');
+      assert.equal(state.build, 'Built by Param Factory · Build 1.0.6-r6');
       if (route !== '/not-a-real-route') {
         assert.equal(await page.locator('link[rel="canonical"]').count(), 1);
         assert.equal(await page.locator('meta[property="og:image"]').getAttribute('content'), `${expectedOrigin}/social-preview.jpg`);
@@ -126,7 +126,7 @@ try {
   const copyPage = await copyContext.newPage();
   for (const route of ['/', '/privacy/']) {
     await copyPage.goto(new URL(route, baseUrl).href, { waitUntil: 'networkidle' });
-    assert.ok((await copyPage.locator('body').textContent()).includes('selected caption text shown on the page'));
+    assert.ok((await copyPage.locator('body').textContent()).includes('caption text the page makes available'));
   }
   report.checks.review2Terminology = 'pass';
   await copyContext.close();

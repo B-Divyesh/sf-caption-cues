@@ -1,6 +1,6 @@
 # Caption Cues copy audit
 
-Audited 2026-08-28 for polish round 5. Every row below is visitor-facing copy
+Audited 2026-08-28 for polish round 6. Every row below is visitor-facing copy
 from the rendered landing page, demo, popup, README, or catalog sentence.
 Repeated wordmarks, icon glyphs, decorative arrows, and `aria-hidden` text are
 excluded. Counts use one tokenizer: whitespace-delimited words
@@ -10,18 +10,21 @@ that the audited string exists in its named source.
 
 No audited sentence exceeds 22 words. The terminology is consistent:
 **speaker label**, **sound cue**, **saved word**, **caption background**, and
-**selected caption text shown on the page**.
+**caption text the page makes available**.
 
 ## Audited rendered copy
 
 | Source | Words | Copy |
 | --- | ---: | --- |
+| landing | 2 | You’re offline. |
+| landing | 8 | Open the sample to keep trying Caption Cues. |
 | landing | 4 | Skip to main content |
 | landing | 2 | Caption Cues |
 | landing | 1 | Demo |
 | landing | 3 | How it works |
 | landing | 1 | Privacy |
 | landing | 2 | Download ZIP |
+| landing | 10 | Abstract paper caption strips moving through a cobalt proofing press |
 | landing | 5 | A caption highlighter for Chrome |
 | landing | 6 | Highlight the caption words you miss |
 | landing | 13 | For viewers who follow captions but miss names, speaker labels, or sound cues. |
@@ -36,6 +39,7 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | landing | 5 | See each highlighted caption part |
 | landing | 12 | Switch a rule off to compare the same caption without that mark. |
 | landing | 2 | Live preview |
+| landing | 11 | MARA: Tell Rowan to meet us at Thessaly Gate. [train approaching] |
 | landing | 5 | Alt+R replays the last line |
 | landing | 2 | Emphasis rules |
 | landing | 2 | Speaker labels |
@@ -48,7 +52,7 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | landing | 4 | A word you chose |
 | landing | 4 | How Caption Cues works |
 | landing | 7 | Uses caption text already on the page |
-| landing | 6 | Caption Cues reads exposed caption text. |
+| landing | 9 | Caption Cues reads caption text the page makes available. |
 | landing | 11 | It does not capture audio, download video, or create a transcript. |
 | landing | 3 | Turn captions on |
 | landing | 8 | Start the captions offered by your video player. |
@@ -57,12 +61,10 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | landing | 4 | Replay the last line |
 | landing | 12 | Press Alt+R to replay a timed cue or reshow visible caption text. |
 | landing | 5 | When a player is unsupported |
-| landing | 10 | Caption Cues leaves hidden caption pixels and closed components unchanged. |
-| landing | 9 | It tells you when exposed caption text is unavailable. |
-| landing | 4 | Why selective highlighting helps |
-| landing | 7 | Make key caption words easier to spot |
-| landing | 6 | I don’t need every caption bigger. |
-| landing | 10 | I need the name I might mishear to look different. |
+| landing | 18 | It cannot change captions baked into the video picture or captions the page does not provide as text. |
+| landing | 3 | Choose your highlights |
+| landing | 6 | Choose which caption words stand out |
+| landing | 8 | Give names you might mishear a different style. |
 | landing | 13 | You choose which names, sound cues, speaker labels, and saved words stand out. |
 | landing | 3 | Installation and compatibility |
 | landing | 5 | Install and use the extension |
@@ -73,15 +75,15 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | landing | 6 | Does it send my captions anywhere? |
 | landing | 1 | No. |
 | landing | 8 | Caption text and settings stay in your browser. |
-| landing | 9 | Caption Cues has no analytics or remote runtime scripts. |
+| landing | 12 | Caption Cues has no analytics and loads no code from other sites. |
 | landing | 3 | Which videos work? |
-| landing | 14 | It supports standard browser caption tracks and selected caption text shown on the page. |
+| landing | 13 | It supports standard browser caption tracks and caption text the page makes available. |
 | landing | 5 | Which videos do not work? |
-| landing | 12 | It cannot change captions hidden in video pixels or inaccessible closed components. |
+| landing | 18 | It cannot change captions baked into the video picture or captions the page does not provide as text. |
 | landing | 8 | Highlights selected words in captions you already use. |
 | landing | 1 | Terms |
 | landing | 1 | Source |
-| landing | 7 | Built by Param Factory · Build 1.0.5-r5 |
+| landing | 7 | Built by Param Factory · Build 1.0.6-r6 |
 | landing | 10 | Original proof-sheet artwork was generated with the factory image model. |
 | demo | 4 | Skip to main content |
 | demo | 7 | Demo — sample data, nothing is saved |
@@ -122,14 +124,14 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | demo | 1 | Paper |
 | demo | 2 | Night ink |
 | demo | 2 | Compatibility check |
-| demo | 4 | Hidden captions stay unchanged |
-| demo | 13 | Try the sample state for a player that does not expose caption text. |
-| demo | 3 | Check hidden-caption sample |
+| demo | 7 | Captions not provided as text stay unchanged |
+| demo | 10 | Try a player state that does not provide caption text. |
+| demo | 3 | Check unavailable-caption sample |
 | demo | 4 | No check run yet. |
-| demo | 11 | Waiting for exposed caption text. The hidden-caption sample was left unchanged. |
+| demo | 12 | Waiting for caption text the page makes available. The sample stayed unchanged. |
 | demo | 8 | Highlights selected words in captions you already use. |
 | demo | 1 | Terms |
-| demo | 7 | Built by Param Factory · Build 1.0.5-r5 |
+| demo | 7 | Built by Param Factory · Build 1.0.6-r6 |
 | demo | 10 | Original proof-sheet artwork was generated with the factory image model. |
 | popup | 2 | Caption controls |
 | popup | 2 | Caption Cues |
@@ -158,28 +160,28 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | popup | 2 | Night ink |
 | popup | 4 | Replay last caption Alt+R |
 | popup | 2 | Runs locally. |
-| popup | 9 | It reads only captions already exposed by this page. |
+| popup | 9 | It reads only caption text the page makes available. |
 | popup | 1 | Privacy |
 | popup | 1 | Terms |
 | popup | 11 | Caption Cues is paused. Turn it on to look for captions. |
 | popup | 6 | Caption detected. Your cues are active. |
-| popup | 12 | Waiting for exposed caption text. Start captions; some players cannot expose it. |
+| popup | 18 | Waiting for caption text the page makes available. Start captions; some players do not provide it as text. |
 | popup | 11 | This browser page does not allow extensions. Try a video tab. |
 | README | 2 | Caption Cues |
-| README | 12 | Highlight names, speaker labels, sound cues, and saved words in exposed captions. |
+| README | 16 | Highlight names, speaker labels, sound cues, and saved words in caption text the page makes available. |
 | README | 12 | Caption Cues is for viewers who follow captions but miss key words. |
 | README | 11 | The Chrome extension changes caption styling without creating a new transcript. |
 | README | 14 | Press Alt+R to replay the last timed cue or reshow the latest visible caption. |
 | README | 5 | Try it with sample data. |
 | README | 13 | The demo is isolated, works offline after one visit, and needs no account. |
-| README | 2 | What ships |
+| README | 4 | What Caption Cues includes |
 | README | 3 | A Chrome extension. |
 | README | 14 | Controls for names, speaker labels, sound cues, saved words, text size, and caption background. |
-| README | 14 | Support for standard browser caption tracks and selected caption text shown on the page. |
+| README | 13 | Support for standard browser caption tracks and caption text the page makes available. |
 | README | 12 | Restoration of the page’s original caption state when the extension is disabled. |
 | README | 9 | Keyboard and popup controls for replaying the last caption. |
 | README | 11 | A static product site, isolated demo, legal pages, and extension ZIP. |
-| README | 13 | Caption Cues cannot change captions hidden in video pixels or inaccessible closed components. |
+| README | 19 | Caption Cues cannot change captions baked into the video picture or captions the page does not provide as text. |
 | README | 12 | It does not capture audio, download video, or bypass a protected player. |
 | README | 3 | Run and test |
 | README | 2 | npm ci |
@@ -199,18 +201,19 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | README | 6 | The Chrome ZIP is in dist/site/downloads/caption-cues-chrome.zip. |
 | README | 6 | To load the extension, open chrome://extensions. |
 | README | 10 | Turn on Developer mode, choose Load unpacked, and select dist/extension. |
-| README | 12 | The release-specific service worker uses network-first page requests and cache-first build assets. |
+| README | 13 | The service worker checks online for pages and keeps built files available offline. |
 | README | 8 | Hosting rules and security headers are in site/public/staticwebapp.config.json. |
 | README | 3 | Privacy and permissions |
 | README | 8 | Caption text and settings stay in the browser. |
-| README | 9 | Page access lets the content script find exposed captions. |
-| README | 12 | The storage permission saves settings, and activeTab sends status and replay commands. |
+| README | 11 | Page access lets Caption Cues find captions on the current page. |
+| README | 3 | storage saves settings. |
+| README | 14 | activeTab checks caption status and replays the last line only on the current tab. |
 | README | 7 | The extension makes no external network requests. |
-| README | 13 | The site and extension contain no analytics, remote fonts, or remote runtime scripts. |
+| README | 15 | The site and extension use no analytics, remote fonts, or code loaded from other sites. |
 | README | 6 | Read the privacy policy and terms. |
 | README | 1 | License |
 | README | 4 | MIT — see LICENSE. |
-| catalog | 16 | Highlight names, speaker labels, sound cues, and saved words in captions already shown by a page. |
+| catalog | 16 | Highlight names, speaker labels, sound cues, and saved words in caption text the page makes available. |
 
 ## Terminology
 
@@ -220,7 +223,7 @@ No audited sentence exceeds 22 words. The terminology is consistent:
 | Description in brackets | sound cue |
 | User-added match | saved word |
 | Caption surface color | caption background |
-| Caption text available to the browser | exposed caption text |
-| Supported non-track source | selected caption text shown on the page |
+| Caption text available to the browser | caption text the page makes available |
+| Supported non-track source | caption text the page makes available |
 | Repeating the recent cue | replay the last line |
 | Downloaded install artifact | unpacked Chrome extension ZIP |

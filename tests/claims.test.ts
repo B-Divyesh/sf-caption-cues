@@ -203,7 +203,7 @@ describe('registered public claims', () => {
     } finally { await context.close(); }
   });
 
-  it('@claim:exposed-caption-sources enhances selected caption text shown on the page and browser caption tracks', async () => {
+  it('@claim:caption-text-page-makes-available enhances caption text the page makes available and browser caption tracks', async () => {
     const fixture = await extensionFixture();
     try {
       await fixture.page.waitForSelector('.ytp-caption-segment .caption-cues-speaker');
@@ -237,7 +237,7 @@ describe('registered public claims', () => {
       const popup = await fixture.context.newPage();
       try {
         await popup.goto(`chrome-extension://${extensionId}/popup.html`);
-        await expect.poll(() => popup.locator('#status').textContent()).toBe('Waiting for exposed caption text. Start captions; some players cannot expose it.');
+        await expect.poll(() => popup.locator('#status').textContent()).toBe('Waiting for caption text the page makes available. Start captions; some players do not provide it as text.');
       } finally { await popup.close(); }
     } finally { await closeFixture(fixture); }
   }, 30_000);
@@ -301,7 +301,7 @@ describe('registered public claims', () => {
     expect(manifest.host_permissions.sort()).toEqual(['http://*/*', 'https://*/*']);
   });
 
-  it('@claim:no-tracking-runtime uses no analytics, remote fonts, or remote runtime scripts', async () => {
+  it('@claim:no-tracking-runtime uses no analytics, remote fonts, or code loaded from other sites', async () => {
     const context = await browser.newContext();
     const requests: string[] = [];
     context.on('request', (request) => requests.push(request.url()));

@@ -87,7 +87,7 @@ async function init() {
     };
     if (!result.enabled) status.textContent = 'Caption Cues is paused. Turn it on to look for captions.';
     else if (result.hasLastCue || result.sourceState === 'detected') status.textContent = 'Caption detected. Your cues are active.';
-    else status.textContent = 'Waiting for exposed caption text. Start captions; some players cannot expose it.';
+    else status.textContent = 'Waiting for caption text the page makes available. Start captions; some players do not provide it as text.';
   } catch { status.textContent = 'This browser page does not allow extensions. Try a video tab.'; }
 }
 

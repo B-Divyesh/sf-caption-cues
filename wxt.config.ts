@@ -3,7 +3,7 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   manifest: {
     name: 'Caption Cues',
-    description: 'Make names, speakers, sound cues, and your saved words easier to catch in captions.',
+    description: 'Highlight names, speaker labels, sound cues, and saved words in caption text the page makes available.',
     version: '1.0.0',
     permissions: ['storage', 'activeTab'],
     host_permissions: ['http://*/*', 'https://*/*'],

@@ -100,7 +100,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 byId('check-unsupported').addEventListener('click', () => {
-  byId('unsupported-output').textContent = 'Waiting for exposed caption text. The hidden-caption sample was left unchanged.';
+  byId('unsupported-output').textContent = 'Waiting for caption text the page makes available. The sample stayed unchanged.';
 });
 
 byId('reset-demo').addEventListener('click', () => {

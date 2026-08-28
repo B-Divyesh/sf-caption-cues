@@ -1,6 +1,6 @@
 # Caption Cues
 
-Highlight names, speaker labels, sound cues, and saved words in exposed captions.
+Highlight names, speaker labels, sound cues, and saved words in caption text the page makes available.
 
 Caption Cues is for viewers who follow captions but miss key words. The Chrome
 extension changes caption styling without creating a new transcript. Press
@@ -9,18 +9,18 @@ extension changes caption styling without creating a new transcript. Press
 [Try it with sample data](https://caption-cues.sociobot.in/?demo=1). The demo is
 isolated, works offline after one visit, and needs no account.
 
-## What ships
+## What Caption Cues includes
 
 - A Chrome extension.
 - Controls for names, speaker labels, sound cues, saved words, text size, and caption background.
-- Support for standard browser caption tracks and selected caption text shown on the page.
+- Support for standard browser caption tracks and caption text the page makes available.
 - Restoration of the page’s original caption state when the extension is disabled.
 - Keyboard and popup controls for replaying the last caption.
 - A static product site, isolated demo, legal pages, and extension ZIP.
 
-Caption Cues cannot change captions hidden in video pixels or inaccessible
-closed components. It does not capture audio, download video, or bypass a
-protected player.
+Caption Cues cannot change captions baked into the video picture or captions
+the page does not provide as text. It does not capture audio, download video,
+or bypass a protected player.
 
 ## Run and test
 
@@ -59,17 +59,17 @@ Build output is in `dist/extension` and `dist/site`. The Chrome ZIP is in
 To load the extension, open `chrome://extensions`. Turn on Developer mode,
 choose **Load unpacked**, and select `dist/extension`.
 
-The release-specific service worker uses network-first page requests and
-cache-first build assets. Hosting rules and security headers are in
+The service worker checks online for pages and keeps built files available
+offline. Hosting rules and security headers are in
 `site/public/staticwebapp.config.json`.
 
 ## Privacy and permissions
 
-Caption text and settings stay in the browser. Page access lets the content
-script find exposed captions. The `storage` permission saves settings, and
-`activeTab` sends status and replay commands. The extension makes no external
-network requests. The site and extension contain no analytics, remote fonts,
-or remote runtime scripts.
+Caption text and settings stay in the browser. Page access lets Caption Cues
+find captions on the current page. `storage` saves settings. `activeTab` checks
+caption status and replays the last line only on the current tab. The extension
+makes no external network requests. The site and extension use no analytics,
+remote fonts, or code loaded from other sites.
 
 Read the [privacy policy](site/privacy/index.html) and
 [terms](site/terms/index.html).

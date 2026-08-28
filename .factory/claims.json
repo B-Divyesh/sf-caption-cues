@@ -35,18 +35,18 @@
     "sandbox": "fresh demo context; replay two lines by keyboard and button; assert announced line numbers"
   },
   {
-    "id": "exposed-caption-sources",
-    "claim": "Supports standard browser caption tracks and selected caption text shown on the page.",
+    "id": "caption-text-page-makes-available",
+    "claim": "Supports standard browser caption tracks and caption text the page makes available.",
     "where": "landing compatibility section, privacy page, README",
-    "test": "npm run test:claim -- @claim:exposed-caption-sources",
-    "sandbox": "fresh extension profile; load local DOM and TextTrack fixtures; assert both are visibly enhanced"
+    "test": "npm run test:claim -- @claim:caption-text-page-makes-available",
+    "sandbox": "fresh extension profile; load local page caption text and browser caption-track fixtures; assert both are visibly enhanced"
   },
   {
     "id": "hidden-caption-limit",
-    "claim": "Hidden or inaccessible captions stay unchanged, and the popup shows a waiting state.",
+    "claim": "Captions baked into the video picture or not provided as page text stay unchanged, and the popup shows a waiting state.",
     "where": "landing limitation, demo compatibility check, README",
     "test": "npm run test:claim -- @claim:hidden-caption-limit",
-    "sandbox": "fresh extension profile; load an unrecognised caption surface; assert exact unchanged content and the popup waiting status"
+    "sandbox": "fresh extension profile; load a caption surface the page does not provide as text; assert exact unchanged content and the popup waiting status"
   },
   {
     "id": "no-media-capture",
@@ -92,7 +92,7 @@
   },
   {
     "id": "no-tracking-runtime",
-    "claim": "The site and extension contain no analytics, remote fonts, remote runtime scripts, or extension network calls.",
+    "claim": "The site and extension use no analytics, remote fonts, code loaded from other sites, or extension network calls.",
     "where": "landing FAQ, privacy page, README",
     "test": "npm run test:claim -- @claim:no-tracking-runtime",
     "sandbox": "fresh demo context plus packaged manifest; intercept requests and inspect all script, stylesheet, preload, and host entries"

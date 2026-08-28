@@ -1,1 +1,1 @@
-Highlight names, speaker labels, sound cues, and saved words in captions already shown by a page.
+Highlight names, speaker labels, sound cues, and saved words in caption text the page makes available.
