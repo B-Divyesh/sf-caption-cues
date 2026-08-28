@@ -1,63 +1,106 @@
-# Caption Cues review 1 handoff
+# Caption Cues perfection-loop round 1 handoff
 
-## Status: FAIL
+## Status
 
-Adversarial first-read review 1 was completed on 2026-08-28 UTC against live
-production and repository commit `ae14a02a370696394d9c2b352dd5848b8db8d1a8`.
-No product code was changed. The detailed report is
-[`review-1.md`](review-1.md).
+Release candidate repaired. All five blocking findings in `review-1.md` are
+resolved in the repository. No known blocking finding remains.
 
-## What was done
+## What changed
 
-- Opened the live site cold in fresh Chromium contexts at 390 × 844 and
-  1440 × 900 and recorded the first-screen interpretation before scrolling.
-- Audited every landing-page/static UI sentence, dynamic status string, README
-  sentence, heading, and action for word count and plain-language issues.
-- Exercised the preview, `/demo`, `?demo=1`, reset/start controls, storage
-  isolation, offline reload, and extension offline replay with request
-  interception.
-- Checked the absent claims registry and claim tags, then ran the full existing
-  release suite from a clean clone as fallback evidence.
-- Checked route metadata, 404 behavior, deep links, back/focus behavior,
-  header/footer consistency, all discovered links, mobile target sizes,
-  console errors, axe results, and the visual system.
+- Replaced the metaphorical first screen with the reviewed job and audience:
+  “Highlight the caption words you miss” and “For viewers who follow captions
+  but miss names, speaker labels, or sound cues.”
+- Made “Try it with sample data” the primary first-screen action. The unpacked
+  ZIP is secondary and discloses Chrome Developer mode beside the action.
+- Added `/demo/` and `?demo=1` entry paths. The demo includes three caption
+  lines, all emphasis controls, a saved word, two caption backgrounds, three
+  sizes, line navigation, `Alt+R`, and the unsupported-player state.
+- Isolated demo state under `demo:caption-cues:settings`. Reset removes demo
+  keys and reseeds the sample. Start for real removes demo keys before download.
+- Added the persistent demo banner and documented the sandbox in `demo.md`.
+- Added `claims.json` with 16 retained public claims and exactly one tagged
+  browser or artifact test for every claim.
+- Removed the dead Supporter checkout, license forms, billing requests, paid
+  copy, and billing host permission. The reviewed endpoint returned 404, so no
+  purchase offer is shown until billing is configured outside this repository.
+- Added `/404.html` and Azure response overrides for a branded HTTP 404. Added
+  explicit `/demo`, `/privacy`, and `/terms` deep-link rewrites.
+- Added route-specific titles, canonical URLs, Open Graph and Twitter metadata,
+  a 1200 × 630 social image, and a 180 px Apple touch icon.
+- Standardized the header and footer on every route. Navigation moves focus to
+  the new H1 and announces route changes, including browser back navigation.
+- Fixed the wordmark selector collision. All visible mobile actions now have
+  at least a 44 × 44 px target.
+- Kept the proofreader print-sheet identity, with the original paper, cobalt,
+  ink, halftone, clipped-control, and registration-mark language.
+- Expanded TextTrack handling to use the current cue when `activeCues` is empty.
+  Disabling the extension restores both page captions and original track mode.
+- Rewrote visitor and README language, normalized terminology, and recorded the
+  sentence audit in `copy-audit.md`.
+- Pinned Playwright to 1.58.2. The site remains WXT + TypeScript with a static
+  Vite build at `dist/site` and the packaged ZIP under `dist/site/downloads/`.
 
-## Verification commands
+## Verification evidence
 
-From a clean clone:
+The clean checkout was `/tmp/caption-cues-clean.lolikM/repo`. It was cloned
+from repository commit `58583ca`, then tested with:
+
+```sh
+npm ci
+npm run setup:browser
+# Every exact command from .factory/claims.json, run independently
+npm run verify:release
+npm run check:clean-browser
+```
+
+Results:
+
+- Claim loop: 16 of 16 commands passed from the clean clone.
+- Main Vitest run: 6 files and 47 tests passed.
+- Claims suite: 16 of 16 tagged tests passed.
+- Browser accessibility suite: zero serious or critical Axe violations on
+  `/`, `/demo/`, `/privacy/`, `/terms/`, and the 404 at 390 × 844 and
+  1440 × 900.
+- Browser route checks: no unexpected console errors; common chrome, metadata,
+  route focus, back focus, wordmark styles, 44 px targets, first-screen sample
+  visibility, and branded HTTP 404 passed.
+- Extension browser checks: visible-caption and TextTrack emphasis, `Alt+R`,
+  popup controls, settings storage, no media requests, and restoration passed.
+- Privacy: demo sentinel keys were unchanged; extension flows sent no caption
+  payload; site traffic stayed same-origin; packaged runtime has no analytics,
+  remote script, font, or billing endpoint.
+- Offline: primed `/demo/` reloaded and changed lines offline. The generated
+  service-worker build A → B update test passed.
+- Clean browser cache: Playwright 1.58.2 downloaded Chromium build 1208 into an
+  empty cache and the entire release gate passed.
+- ZIP integrity: all 11 extension entries passed `unzip -t`.
+- Build budgets: initial site JS 7,647 bytes raw; CSS 14,958 bytes raw; mobile
+  AVIF 15,964 bytes. Limits are 200 KB, 50 KB, and 300 KB respectively.
+- Local mobile Lighthouse: home and demo both scored 100 performance, 100
+  accessibility, 100 best practices, and 100 SEO. Home LCP was 1.5 s; demo LCP
+  was 0.9 s; both recorded CLS 0 and total blocking time 0 ms.
+- Factory URL verifier against the local production build: home and demo both
+  returned 200 with title, `lang=en`, one H1, a main landmark, image alt text,
+  labeled buttons, and no console errors.
+
+## Run locally
 
 ```sh
 npm ci
 npm run setup:browser
 npm run verify:release
+npm run build:site
 ```
 
-The release suite passed: TypeScript, 13 Vitest tests, production build,
-unpacked extension smoke, service-worker offline update, and ZIP integrity.
-Fresh live browser checks found zero axe violations and no cold-load console
-errors. Custom network interception confirmed same-origin-only landing traffic
-and no outbound traffic during a local built-extension caption/save/replay
-flow.
+Load `dist/extension` with Chrome Developer mode. Serve `dist/site` as the
+static root. The downloadable archive is
+`dist/site/downloads/caption-cues-chrome.zip`.
 
-## Blocking gaps
+## Known gaps and next steps
 
-1. The first screen does not name the intended viewer; the sample action is
-   clipped below the mobile fold and is not the primary action.
-2. There is no isolated one-click demo, demo banner, reset, start-real control,
-   demo storage namespace, `.factory/demo.md`, or working `/demo` route.
-3. `.factory/claims.json` and all `@claim:*` tests are absent despite many
-   public claims.
-4. Unknown routes use Azure's generic 404 rather than a designed product route.
-5. “Buy Supporter — $9” returns HTTP 404.
+No blocking product or verification gap is known. Supporter sales remain
+intentionally absent because the external Sociobot checkout is not registered.
+Reintroduce paid UI only after that endpoint is live and has its own checkout,
+merchant, restore, and license claim tests.
 
-Other material gaps are missing canonical/social/apple metadata, inconsistent
-legal-page chrome, absent route focus/announcement behavior, undersized link
-targets, an unreadable double-circle wordmark caused by a global CSS selector,
-and a developer-ZIP install path that is disclosed too late.
-
-## Next step
-
-Resolve the five blockers, add the claim registry and clean-demo tests, then
-repeat this review from fresh browser contexts. Do not treat the passing
-release suite as claim coverage until each visitor-facing promise has exactly
-one tagged sandbox test.
+Deployment verification is recorded below after the production upload.
