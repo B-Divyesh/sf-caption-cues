@@ -158,7 +158,7 @@ describe('registered public claims', () => {
     } finally { await context.close(); }
   });
 
-  it('@claim:exposed-caption-sources enhances visible page captions and browser caption tracks', async () => {
+  it('@claim:exposed-caption-sources enhances selected caption text shown on the page and browser caption tracks', async () => {
     const fixture = await extensionFixture();
     try {
       await fixture.page.waitForSelector('.ytp-caption-segment .caption-cues-speaker');

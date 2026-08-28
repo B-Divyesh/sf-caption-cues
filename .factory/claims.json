@@ -36,8 +36,8 @@
   },
   {
     "id": "exposed-caption-sources",
-    "claim": "Supports standard browser caption tracks and selected visible page captions.",
-    "where": "landing compatibility section, README",
+    "claim": "Supports standard browser caption tracks and selected caption text shown on the page.",
+    "where": "landing compatibility section, privacy page, README",
     "test": "npm run test:claim -- @claim:exposed-caption-sources",
     "sandbox": "fresh extension profile; load local DOM and TextTrack fixtures; assert both are visibly enhanced"
   },

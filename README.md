@@ -13,7 +13,7 @@ isolated, works offline after one visit, and needs no account.
 
 - A Chrome Manifest V3 extension.
 - Controls for names, speaker labels, sound cues, saved words, text size, and caption background.
-- Support for standard browser caption tracks and selected visible caption elements.
+- Support for standard browser caption tracks and selected caption text shown on the page.
 - Restoration of the page’s original caption state when the extension is disabled.
 - Keyboard and popup controls for replaying the last caption.
 - A static product site, isolated demo, legal pages, and extension ZIP.

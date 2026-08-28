@@ -30,10 +30,22 @@ describe('reviewed public language', () => {
     for (const phrase of rejected) expect(publicCopy).not.toContain(phrase);
   });
 
+  it('uses one name for the supported page-caption source', () => {
+    const phrase = 'selected caption text shown on the page';
+    const home = readFileSync('site/index.html', 'utf8');
+    const readme = readFileSync('README.md', 'utf8');
+    const privacy = readFileSync('site/privacy/index.html', 'utf8');
+    const claims = readFileSync('.factory/claims.json', 'utf8');
+    for (const source of [home, readme, privacy, claims]) expect(source).toContain(phrase);
+    for (const variant of ['selected visible caption elements', 'selected visible page captions', 'selected visible caption text exposed by the page']) {
+      expect(publicCopy + claims).not.toContain(variant);
+    }
+  });
+
   it('ships a verb-first catalog sentence within 120 characters', () => {
     const description = readFileSync('.factory/catalog-description.txt', 'utf8').trim();
     expect(description.length).toBeLessThanOrEqual(120);
     expect(description).toMatch(/^Highlight\b/);
-    expect(description).toBe('Highlight easy-to-miss names, speaker labels, sound cues, and saved words in existing captions.');
+    expect(description).toBe('Highlight missed names, speaker labels, sound cues, and saved words in captions already on the page.');
   });
 });
