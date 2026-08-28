@@ -5,7 +5,7 @@ export interface CueSegment {
   text: string;
 }
 
-export type CaptionTheme = 'paper' | 'ink' | 'cobalt';
+export type CaptionTheme = 'paper' | 'ink';
 
 export interface CaptionSettings {
   enabled: boolean;
@@ -16,13 +16,6 @@ export interface CaptionSettings {
   manualWords: string[];
   captionSize: 22 | 26 | 30;
   theme: CaptionTheme;
-}
-
-export interface LicenseState {
-  token: string;
-  valid: boolean;
-  checkedAt: number;
-  reason?: string;
 }
 
 export const DEFAULT_SETTINGS: CaptionSettings = {
@@ -37,4 +30,3 @@ export const DEFAULT_SETTINGS: CaptionSettings = {
 };
 
 export const SETTINGS_KEY = 'captionCuesSettings';
-export const LICENSE_KEY = 'captionCuesLicense';

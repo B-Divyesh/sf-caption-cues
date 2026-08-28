@@ -1,5 +1,5 @@
 import { browser } from 'wxt/browser';
-import { DEFAULT_SETTINGS, LICENSE_KEY, SETTINGS_KEY, type CaptionSettings, type LicenseState } from './types';
+import { DEFAULT_SETTINGS, SETTINGS_KEY, type CaptionSettings } from './types';
 
 export async function getSettings(): Promise<CaptionSettings> {
   const stored = await browser.storage.local.get(SETTINGS_KEY);
@@ -8,13 +8,4 @@ export async function getSettings(): Promise<CaptionSettings> {
 
 export async function saveSettings(settings: CaptionSettings) {
   await browser.storage.local.set({ [SETTINGS_KEY]: settings });
-}
-
-export async function getLicense(): Promise<LicenseState | undefined> {
-  const stored = await browser.storage.local.get(LICENSE_KEY);
-  return stored[LICENSE_KEY] as LicenseState | undefined;
-}
-
-export async function saveLicense(license: LicenseState) {
-  await browser.storage.local.set({ [LICENSE_KEY]: license });
 }

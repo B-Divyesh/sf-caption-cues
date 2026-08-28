@@ -35,7 +35,6 @@ export default defineContentScript({
       :host{all:initial}.wrap{position:fixed;display:flex;justify-content:center;pointer-events:none;padding:0 16px;box-sizing:border-box}
       .line{max-width:920px;text-align:center;font:700 var(--cc-size,26px)/1.38 Arial,sans-serif;letter-spacing:.01em;background:#fff9ed;color:#171612;border:2px solid #171612;padding:10px 14px;box-shadow:5px 5px 0 #1546c7;text-wrap:balance;animation:cc-in 180ms ease-out}
       .line[data-theme="ink"]{background:#171612;color:#fff9ed;border-color:#fff9ed;box-shadow:5px 5px 0 #ef6a32}
-      .line[data-theme="cobalt"]{background:#0c2c81;color:#fff9ed;border-color:#fff9ed;box-shadow:5px 5px 0 #171612}
       .cc-name,.cc-manual{font-weight:900;text-decoration:underline;text-decoration-thickness:.14em;text-underline-offset:.12em;text-decoration-color:#2a5ee5}
       .cc-speaker{font-weight:900;background:#1546c7;color:#fff;padding:.08em .24em;text-transform:uppercase}
       .cc-sound{font-weight:900;background:#c43b12;color:#fff;padding:.08em .3em;border-radius:2px}
@@ -97,7 +96,8 @@ export default defineContentScript({
     }
 
     function cueChange(track: TextTrack, video: HTMLVideoElement) {
-      const cues = Array.from(track.activeCues ?? []) as VTTCue[];
+      const active = Array.from(track.activeCues ?? []) as VTTCue[];
+      const cues = active.length ? active : (Array.from(track.cues ?? []) as VTTCue[]).filter((cue) => cue.startTime <= video.currentTime && cue.endTime >= video.currentTime);
       if (!cues.length) { host.style.display = 'none'; return; }
       const text = cues.map((cue) => captionToPlainText(cue.text)).join(' ');
       const startTime = Math.min(...cues.map((cue) => cue.startTime));

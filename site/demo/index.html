@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4ebd8" />
+    <meta name="description" content="Try Caption Cues with isolated sample captions before installing the Chrome extension." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Caption Cues" />
+    <meta property="og:title" content="Demo — Caption Cues" />
+    <meta property="og:description" content="Try Caption Cues with isolated sample captions before installing the Chrome extension." />
+    <meta property="og:url" content="https://caption-cues.sociobot.in/demo/" />
+    <meta property="og:image" content="https://caption-cues.sociobot.in/social-preview.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Demo — Caption Cues" />
+    <meta name="twitter:description" content="Try Caption Cues with isolated sample captions before installing the Chrome extension." />
+    <meta name="twitter:image" content="https://caption-cues.sociobot.in/social-preview.jpg" />
+    <title>Demo — Caption Cues</title>
+    <link rel="canonical" href="https://caption-cues.sociobot.in/demo/" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/main.css" />
+    <link rel="stylesheet" href="/demo.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to main content</a>
+    <div id="offline" class="offline" role="status" hidden>You’re offline. The sample and its controls still work.</div>
+    <div id="route-status" class="sr-only" role="status" aria-live="polite"></div>
+    <aside class="demo-banner" aria-label="Demo mode"><strong>Demo — sample data, nothing is saved</strong><div><button id="reset-demo" type="button">Reset demo</button><a id="start-real" href="/downloads/caption-cues-chrome.zip" download>Start for real</a></div></aside>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Caption Cues home"><span class="brand-mark" aria-hidden="true">CC</span><span class="brand-name">Caption Cues</span></a>
+      <nav aria-label="Primary"><a aria-current="page" href="/demo/">Demo</a><a href="/#how">How it works</a><a href="/privacy/">Privacy</a><a class="nav-download" href="/downloads/caption-cues-chrome.zip" download>Download ZIP <span aria-hidden="true">↓</span></a></nav>
+    </header>
+
+    <main id="main" class="demo-main">
+      <section class="demo-intro" aria-labelledby="demo-title"><p class="eyebrow"><span aria-hidden="true">●</span> Isolated sample</p><h1 id="demo-title" tabindex="-1">Try Caption Cues on sample captions</h1><p class="lede">Change the marks, add a saved word, and replay lines from a short station scene.</p></section>
+
+      <section class="demo-workbench" aria-labelledby="workbench-title">
+        <div class="demo-stage">
+          <div class="stage-top"><p>Sample player · Thessaly station</p><p id="line-count">Line 1 of 3</p></div>
+          <div class="scene" aria-hidden="true"><span class="platform-line"></span><span class="clock">19:42</span><span class="train">▰ ▰ ▰</span></div>
+          <p id="sample-caption" class="sample-caption" aria-live="polite"></p>
+          <div class="playback"><button id="previous-line" type="button">Previous line</button><button id="replay-line" class="primary-control" type="button">Replay last line <kbd>Alt</kbd> + <kbd>R</kbd></button><button id="next-line" type="button">Next line</button></div>
+          <p id="demo-status" class="demo-status" role="status" aria-live="polite">Sample ready. Caption line 1 is highlighted.</p>
+        </div>
+
+        <form id="demo-controls" class="demo-controls">
+          <fieldset><legend>Choose what stands out</legend><label><input id="demo-speakers" type="checkbox" checked /><span><b>Speaker labels</b><small>Text before the colon</small></span></label><label><input id="demo-names" type="checkbox" checked /><span><b>Names</b><small>Names in each line</small></span></label><label><input id="demo-sounds" type="checkbox" checked /><span><b>Sound cues</b><small>Descriptions in brackets</small></span></label><label><input id="demo-manual" type="checkbox" checked /><span><b>Saved words</b><small>Your own word list</small></span></label></fieldset>
+          <div class="demo-fields"><label for="demo-word">Add a saved word</label><div class="field-row"><input id="demo-word" maxlength="40" autocomplete="off" value="Gate" /><button type="submit">Save word</button></div><p id="saved-words">Saved word: Gate</p><label for="demo-size">Caption size</label><select id="demo-size"><option value="22">Comfortable</option><option value="26" selected>Large</option><option value="30">Extra large</option></select><label for="demo-theme">Caption background</label><select id="demo-theme"><option value="paper">Paper</option><option value="ink">Night ink</option></select></div>
+        </form>
+      </section>
+
+      <section class="unsupported" aria-labelledby="unsupported-title"><div><p class="folio">Compatibility check</p><h2 id="unsupported-title">Hidden captions stay unchanged</h2><p>Try the sample state for a player that does not expose caption text.</p></div><button id="check-unsupported" type="button">Check hidden-caption sample</button><p id="unsupported-output" role="status" aria-live="polite">No check run yet.</p></section>
+    </main>
+
+    <footer class="site-footer"><div><a class="brand" href="/" aria-label="Caption Cues home"><span class="brand-mark" aria-hidden="true">CC</span><span class="brand-name">Caption Cues</span></a><p>Highlights selected words in captions you already use.</p></div><nav aria-label="Footer"><a href="/demo/">Demo</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><p class="build-note">Built by Param Factory · Build 1.0.1-r1</p><p class="generated-note">Original proof-sheet artwork was generated with the factory image model.</p></footer>
+    <script type="module" src="/demo.ts"></script>
+  </body>
+</html>

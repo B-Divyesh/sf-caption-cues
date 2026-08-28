@@ -6,7 +6,7 @@ export default defineConfig({
     description: 'Make names, speakers, sound cues, and your saved words easier to catch in captions.',
     version: '1.0.0',
     permissions: ['storage', 'activeTab'],
-    host_permissions: ['http://*/*', 'https://*/*', 'https://api.sociobot.in/*'],
+    host_permissions: ['http://*/*', 'https://*/*'],
     action: { default_title: 'Open Caption Cues' },
     commands: {
       'replay-last-caption': {

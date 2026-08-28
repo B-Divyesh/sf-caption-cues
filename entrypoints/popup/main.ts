@@ -1,5 +1,5 @@
 import { browser } from 'wxt/browser';
-import { getLicense, getSettings, saveLicense, saveSettings } from '../../lib/storage';
+import { getSettings, saveSettings } from '../../lib/storage';
 import { DEFAULT_SETTINGS, type CaptionSettings, type CaptionTheme } from '../../lib/types';
 
 const byId = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -12,9 +12,7 @@ const controls = {
 const words = byId<HTMLUListElement>('words');
 const empty = byId<HTMLElement>('words-empty');
 const status = byId<HTMLElement>('status');
-const licenseStatus = byId<HTMLElement>('license-status');
 let settings: CaptionSettings = DEFAULT_SETTINGS;
-let supporter = false;
 
 function render() {
   controls.enabled.checked = settings.enabled;
@@ -44,11 +42,6 @@ async function currentTabMessage(message: unknown) {
 
 for (const [key, control] of Object.entries(controls)) {
   control.addEventListener('change', () => {
-    if (key === 'theme' && control.value === 'cobalt' && !supporter) {
-      controls.theme.value = settings.theme;
-      byId<HTMLElement>('theme-note').hidden = false;
-      return;
-    }
     settings = {
       ...settings,
       enabled: controls.enabled.checked,
@@ -79,25 +72,8 @@ byId<HTMLButtonElement>('replay').addEventListener('click', async () => {
   } catch { status.textContent = 'Open a page with captions, then try again.'; }
 });
 
-byId<HTMLFormElement>('license-form').addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const token = byId<HTMLInputElement>('license').value.trim();
-  if (!token) { licenseStatus.textContent = 'Paste the license from your receipt.'; return; }
-  licenseStatus.textContent = 'Checking license…';
-  const result = await browser.runtime.sendMessage({ type: 'VERIFY_LICENSE', token, force: true }) as { valid: boolean; reason?: string; offline?: boolean; checkedAt: number };
-  supporter = result.valid;
-  await saveLicense({ token, valid: result.valid, reason: result.reason, checkedAt: result.checkedAt });
-  licenseStatus.textContent = result.valid ? 'Supporter edition unlocked.' : result.offline ? 'Could not connect. Your free tools still work offline.' : 'This license is not active. Check the token or purchase again.';
-});
-
 async function init() {
   settings = await getSettings();
-  const license = await getLicense(); supporter = Boolean(license?.valid);
-  if (license?.token) {
-    const checked = await browser.runtime.sendMessage({ type: 'VERIFY_LICENSE', token: license.token }) as { valid: boolean };
-    supporter = checked.valid;
-    if (!supporter && settings.theme === 'cobalt') settings = { ...settings, theme: 'paper' };
-  }
   render();
   try {
     const result = await currentTabMessage({ type: 'GET_STATUS' }) as { enabled: boolean; detected: number; hasLastCue: boolean };
